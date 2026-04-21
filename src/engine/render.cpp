@@ -1,8 +1,7 @@
-#include "body/static.h"
-#include "raylib.h"
+#include "engine/render.h"
 #include "initial.h"
 
-Static::Init(int x, int y, bool anchor, std::string texture){
+void Render::Init(int x, int y, bool anchor, std::string texture){
     this->x = x;
     this->y = y;
     this->anchor = anchor;
@@ -12,10 +11,6 @@ Static::Init(int x, int y, bool anchor, std::string texture){
     this->texture = *init.find_block_by_name(texture);
 }
 
-void Static::Display(){
+void Render::Display(){
     DrawTexture(this->texture, this->x, this->y, WHITE);
-}
-
-Static::~Static(){
-    
 }

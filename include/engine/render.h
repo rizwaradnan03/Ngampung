@@ -1,15 +1,13 @@
-#include "raylib.h"
 #include "string"
-#include "engine/render.h"
+#include "raylib.h"
 
 #pragma once
 
-class Static: Render {
+class Render {
     public:
-        ~Static();
         void Display();
         void Init(int x, int y, bool anchor, std::string texture);
-
+    
     private:
         int x;
         int y;
