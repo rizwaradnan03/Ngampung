@@ -6,7 +6,7 @@
 class Render {
     public:
         void Display();
-        void Init(int x, int y, bool anchor, std::string texture);
+        virtual void Init(int x, int y, bool anchor, std::string texture);
     
     private:
         int x;

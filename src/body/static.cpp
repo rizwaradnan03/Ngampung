@@ -1,15 +1,20 @@
 #include "body/static.h"
 #include "raylib.h"
 #include "initial.h"
+#include "iostream"
 
-Static::Init(int x, int y, bool anchor, std::string texture){
+void Static::Init(int x, int y, bool anchor, std::string texture){
     this->x = x;
     this->y = y;
     this->anchor = anchor;
 
-    Initial init;
-
-    this->texture = *init.find_block_by_name(texture);
+    auto tex = G_initial->find_block_by_name(texture);
+    if(tex == nullptr) {
+        std::cout << "Texture Tidak Ditemukan!" << std::endl;
+        return;
+    }
+    
+    this->texture = *tex;
 }
 
 void Static::Display(){

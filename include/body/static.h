@@ -4,11 +4,11 @@
 
 #pragma once
 
-class Static: Render {
+class Static: public Render {
     public:
         ~Static();
         void Display();
-        void Init(int x, int y, bool anchor, std::string texture);
+        void Init(int x, int y, bool anchor, std::string texture) override;
 
     private:
         int x;

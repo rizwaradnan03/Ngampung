@@ -11,3 +11,5 @@ class Initial{
 
         std::vector<std::pair<std::string, Texture>> block;
 };
+
+extern Initial* G_initial;
