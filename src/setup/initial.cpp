@@ -24,9 +24,13 @@ void Initial::InitAudio(){
     this->audio.push_back(std::make_pair("die", fx_die));
 }
 
+void Initial::InitGlobal(){
+}
+
 Initial::Initial(){
     this->InitImage();    
     this->InitAudio();    
+    this->InitGlobal();    
 }
 
 Texture* Initial::find_block_by_name(std::string name){

@@ -9,6 +9,7 @@ class Initial{
         Initial();
         void InitImage();
         void InitAudio();
+        void InitGlobal();
         Texture* find_block_by_name(std::string name);
         Sound* find_audio_by_name(std::string name);
 
