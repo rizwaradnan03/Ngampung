@@ -7,7 +7,7 @@
 class Static: public Render {
     public:
         ~Static();
-        void Display();
+        void Display() override;
         void Init(int x, int y, bool anchor, std::string texture) override;
 
     private:

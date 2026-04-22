@@ -1,6 +1,7 @@
 #include "engine/game.h"
 #include <raylib.h>
 #include "body/static.h"
+#include "body/dynamic.h"
 #include "iostream"
 #include "initial.h"
 
@@ -21,6 +22,11 @@ void Game::Start(){
 
     this->to_render.push_back(std::make_pair(1, water));
 
+    Dynamic* player = new Dynamic();
+    player->Init(0, 0, false, "jawa");
+
+    this->player = player;
+
     while (!WindowShouldClose()){
         // need to implement the update
         
@@ -28,7 +34,8 @@ void Game::Start(){
         ClearBackground(BLUE);
 
         // displaying the screen
-        this->Display();
+        // this->Display();
+        // the character
 
         EndDrawing();
     }
