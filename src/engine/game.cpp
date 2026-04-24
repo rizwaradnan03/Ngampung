@@ -5,6 +5,27 @@
 #include "iostream"
 #include "initial.h"
 
+std::vector<Render*> RunStarter(){
+    std::vector<Render*> tmp;
+    
+    int cur_x = 0;
+    int cur_y = 300;
+    while(cur_y < 600){
+        while(cur_x <= 780){
+            Render* block = new Static();
+            block->Init(cur_x, cur_y, true, "block_face");
+
+            tmp.push_back(block);
+            cur_x += 30;
+        }
+
+        cur_y += 30;
+        cur_x = 0;
+    }
+
+    return tmp;
+}
+
 void Game::Start(){
     constexpr int screenWidth = 800;
     constexpr int screenHeight = 600;
@@ -14,13 +35,10 @@ void Game::Start(){
 
     // starting the GLOBAL
     G_initial = new Initial();
-    Render* block_of_water = new Static();
-    block_of_water->Init(0, 0, true, "block_face");
 
-    std::vector<Render*> water;
-    water.push_back(block_of_water);
+    std::vector<Render*> value = RunStarter();
 
-    this->to_render.push_back(std::make_pair(1, water));
+    this->to_render.push_back(std::make_pair(1, value));
 
     Dynamic* player = new Dynamic();
     player->Init(0, 0, false, "jawa");
@@ -28,14 +46,14 @@ void Game::Start(){
     this->player = player;
 
     while (!WindowShouldClose()){
-        // need to implement the update
-        
         BeginDrawing();
         ClearBackground(BLUE);
 
         // displaying the screen
-        // this->Display();
-        // the character
+        this->Display();
+        DrawRectangle(0, 0, 20, 20, RED);
+
+        // displaying the character here
 
         EndDrawing();
     }

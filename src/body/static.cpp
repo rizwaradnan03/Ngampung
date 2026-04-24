@@ -18,7 +18,11 @@ void Static::Init(int x, int y, bool anchor, std::string texture){
 }
 
 void Static::Display(){
-    DrawTexture(this->texture, this->x, this->y, WHITE);
+    Rectangle source = {0, 0, (float)this->texture.width, (float)this->texture.height};
+    Rectangle dest = {(float)this->x, (float)this->y, 30.0f, 30.0f};
+    Vector2 origin = {0, 0};
+
+    DrawTexturePro(this->texture, source, dest, origin, 0.0f, WHITE);
 }
 
 Static::~Static(){

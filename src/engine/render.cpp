@@ -17,6 +17,9 @@ void Render::Init(int x, int y, bool anchor, std::string texture){
 }
 
 void Render::Display(){
-    // std::cout << "Texture ID: " << this->texture.id << std::endl;
-    DrawTextureEx(this->texture, {(float)this->x, (float)this->y}, 0.2f, 0.2f, RED);
+    Rectangle source = {0, 0, (float)this->texture.width, (float)this->texture.height};
+    Rectangle dest = {(float)this->x, (float)this->y, 30.0f, 30.0f};
+    Vector2 origin = {0, 0};
+
+    DrawTexturePro(this->texture, source, dest, origin, 0.0f, WHITE);
 }
