@@ -6,19 +6,20 @@
 #pragma once
 
 class Dynamic: public Render {
-    // to use the same function
     using Render::Init;
 
     public:    
-        void Init(int x, int y, bool anchor, std::string texture);
+        void Init(int32_t x, int32_t y, int32_t* health, bool anchor, bool is_can_collide, std::string texture) override;
+        void Run() override;
         void Display() override;
-        void Move(); 
+        void Movement(); 
 
     private:
         int32_t x;
         int32_t y;
-        int32_t health;
+        int32_t* health;
         bool anchor;
+        bool is_can_collide;
 
         // upper body
         Texture u_head;

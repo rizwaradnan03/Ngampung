@@ -6,15 +6,15 @@
 Initial* G_initial = nullptr;
 
 void Initial::InitImage(){
-    Image block_face = LoadImage("./assets/image/block/knight.jpg");
-    if (block_face.data == nullptr) {
+    Image BLOCK_face = LoadImage("./assets/image/block/knight.jpg");
+    if (BLOCK_face.data == nullptr) {
         std::cout << "GAGAL LOAD IMAGE!" << std::endl;
     }
 
-    Texture block_face_t = LoadTextureFromImage(block_face);
-    UnloadImage(block_face);
+    Texture BLOCK_face_t = LoadTextureFromImage(BLOCK_face);
+    UnloadImage(BLOCK_face);
 
-    this->block.push_back(std::make_pair("block_face", block_face_t));
+    this->block.push_back(std::make_pair("BLOCK_face", BLOCK_face_t));
 
 }
 

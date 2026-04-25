@@ -2,10 +2,11 @@
 #include "iostream"
 #include "initial.h"
 
-void Render::Init(int x, int y, bool anchor, std::string texture){
+void Render::Init(int32_t x, int32_t y, int32_t* health, bool anchor, bool is_can_collide, std::string texture){
     this->x = x;
     this->y = y;
     this->anchor = anchor;
+    this->is_can_collide = is_can_collide;
 
     auto tex = G_initial->find_block_by_name(texture);
     if(tex == nullptr) {
@@ -23,3 +24,7 @@ void Render::Display(){
 
     DrawTexturePro(this->texture, source, dest, origin, 0.0f, WHITE);
 }
+
+void Render::Delete(){}
+
+void Render::Run(){}

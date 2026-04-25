@@ -1,19 +1,21 @@
-#include "engine/game.h"
+#include <engine/game.h>
 #include <raylib.h>
-#include "body/static.h"
-#include "body/dynamic.h"
-#include "iostream"
-#include "initial.h"
+#include <body/static.h>
+#include <body/dynamic.h>
+#include <iostream>
+#include <initial.h>
+#include <cstdint>
 
-std::vector<Render*> RunStarter(){
-    std::vector<Render*> tmp;
-    
+std::vector<Static*> RunStarter(){
+    std::vector<Static*> tmp;
+    int32_t h = 3;
+
     int cur_x = 0;
     int cur_y = 300;
     while(cur_y < 600){
         while(cur_x <= 780){
-            Render* block = new Static();
-            block->Init(cur_x, cur_y, true, "block_face");
+            Static* block = new Static();
+            block->Init(cur_x, cur_y, &h, true, true, "BLOCK_face");
 
             tmp.push_back(block);
             cur_x += 30;
@@ -31,29 +33,34 @@ void Game::Start(){
     constexpr int screenHeight = 600;
 
     InitWindow(screenWidth, screenHeight, "Ngampung");
+    InitAudioDevice();
     SetTargetFPS(60);
 
     // starting the GLOBAL
     G_initial = new Initial();
 
-    std::vector<Render*> value = RunStarter();
+    std::vector<Static*> value = RunStarter();
 
     this->to_render.push_back(std::make_pair(1, value));
 
     Dynamic* player = new Dynamic();
-    player->Init(0, 0, false, "jawa");
+    int32_t h = 100;
+    player->Init(30, 0, &h, false, true, "BLOCK_face");
 
     this->player = player;
 
     while (!WindowShouldClose()){
+        // player movement
+        player->Movement();
+
         BeginDrawing();
         ClearBackground(BLUE);
 
         // displaying the screen
-        this->Display();
-        DrawRectangle(0, 0, 20, 20, RED);
+        this->Habit(nullptr);
 
         // displaying the character here
+        player->Run();
 
         EndDrawing();
     }
@@ -61,10 +68,10 @@ void Game::Start(){
     CloseWindow();
 }
 
-void Game::Display(){
+void Game::Habit(std::string* action){
     for(int i = 0;i < this->to_render.size();i++){
         for(int j = 0;j < this->to_render[i].second.size();j++){
-            this->to_render[i].second[j]->Display();
+            this->to_render[i].second[j]->Run(action);
         }
     }
 }

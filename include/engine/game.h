@@ -1,16 +1,17 @@
-#include "vector"
-#include "utility"
-#include "engine/render.h"
-#include "body/dynamic.h"
+#include <vector>
+#include <utility>
+#include <body/dynamic.h>
+#include <body/static.h>
+#include <string>
 
 #pragma once
 
 class Game {
     public:
         void Start();
-        void Display();
+        void Habit(std::string* action);
 
     private:
-        std::vector<std::pair<int, std::vector<Render*>>> to_render;
+        std::vector<std::pair<int, std::vector<Static*>>> to_render;
         Dynamic* player;
 };
