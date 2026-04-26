@@ -3,7 +3,7 @@
 #include <engine/log.h>
 #include <iostream>
 
-void Dynamic::Init(int32_t x, int32_t y, int32_t* health, bool anchor, bool is_can_collide, std::string texture){
+void Dynamic::Init(int32_t x, int32_t y, int32_t* health, bool anchor, bool is_can_collide, std::vector<int32_t>* collide_masks, std::string texture){
     this->x = x;
     this->y = y;
     this->anchor = anchor;
@@ -19,8 +19,13 @@ void Dynamic::Init(int32_t x, int32_t y, int32_t* health, bool anchor, bool is_c
     this->m_body = *tex;
 }
 
-void Dynamic::Run(){
+void Dynamic::Run(const std::vector<std::pair<int, std::vector<Static*>>>& static_objects){
     this->Display();
+    this->physics(static_objects);
+}
+
+void Dynamic::physics(const std::vector<std::pair<int, std::vector<Static*>>>& static_objects){
+    
 }
 
 void Dynamic::Display(){
@@ -28,17 +33,14 @@ void Dynamic::Display(){
     Rectangle dest = {(float)this->x, (float)this->y, 30.0f, 30.0f};
     Vector2 origin = {0, 0};
 
-    // upper body
     DrawTexturePro(this->u_head, source, dest, origin, 0.0f, WHITE);
     DrawTexturePro(this->u_face, source, dest, origin, 0.0f, WHITE);
     DrawTexturePro(this->u_neck, source, dest, origin, 0.0f, WHITE);
     
-    //middle body
     DrawTexturePro(this->m_body, source, dest, origin, 0.0f, WHITE);
     DrawTexturePro(this->m_l_hand, source, dest, origin, 0.0f, WHITE);
     DrawTexturePro(this->m_r_hand, source, dest, origin, 0.0f, WHITE);
 
-    // lower body
     DrawTexturePro(this->l_foot, source, dest, origin, 0.0f, WHITE);
     DrawTexturePro(this->l_leg, source, dest, origin, 0.0f, WHITE);
 }

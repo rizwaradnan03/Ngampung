@@ -1,13 +1,14 @@
-#include "body/static.h"
-#include "raylib.h"
-#include "initial.h"
-#include "iostream"
+#include <body/static.h>
+#include <raylib.h>
+#include <initial.h>
+#include <iostream>
 
-void Static::Init(int32_t x, int32_t y, int32_t* health, bool anchor, bool is_can_collide, std::string texture){
+void Static::Init(int32_t x, int32_t y, int32_t* health, bool anchor, bool is_can_collide, std::vector<int32_t>* collide_masks, std::string texture){
     this->x = x;
     this->y = y;
     this->anchor = anchor;
     this->is_can_collide = is_can_collide;
+    this->collide_masks = collide_masks;
 
     if(health != nullptr){
         this->health = health;

@@ -1,12 +1,13 @@
-#include "engine/render.h"
-#include "iostream"
-#include "initial.h"
+#include <engine/render.h>
+#include <iostream>
+#include <initial.h>
 
-void Render::Init(int32_t x, int32_t y, int32_t* health, bool anchor, bool is_can_collide, std::string texture){
+void Render::Init(int32_t x, int32_t y, int32_t* health, bool anchor, bool is_can_collide, std::vector<int32_t>* collide_masks, std::string texture){
     this->x = x;
     this->y = y;
     this->anchor = anchor;
     this->is_can_collide = is_can_collide;
+    this->collide_masks = collide_masks;
 
     auto tex = G_initial->find_block_by_name(texture);
     if(tex == nullptr) {

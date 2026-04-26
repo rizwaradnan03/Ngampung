@@ -1,0 +1,1 @@
+1. WE DO NEED SOME TRIGGER TO RE-OBTAIN THE EXISTING STATIC & DYNAMIC STUFF (game.cpp) "i got this by running checker"

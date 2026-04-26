@@ -12,6 +12,6 @@ class Game {
         void Habit(std::string* action);
 
     private:
-        std::vector<std::pair<int, std::vector<Static*>>> to_render;
+        std::vector<std::pair<int, std::vector<Static*>>> to_render_static;
         Dynamic* player;
 };
