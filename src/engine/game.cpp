@@ -53,18 +53,14 @@ void Game::Start(){
     this->player = player;
 
     while (!WindowShouldClose()){
-
-        // player movement
         player->Movement();
 
         BeginDrawing();
         ClearBackground(BLUE);
 
-        // displaying the screen
         this->Habit(nullptr);
 
-        // displaying the character here
-        player->Run(this->to_render_static);
+        player->Run(this->to_render_static, this->to_render_dynamic);
 
         EndDrawing();
     }
@@ -75,7 +71,7 @@ void Game::Start(){
 void Game::Habit(std::string* action){
     for(int i = 0;i < this->to_render_static.size();i++){
         for(int j = 0;j < this->to_render_static[i].second.size();j++){
-            this->to_render_static[i].second[j]->Run(action);
+            this->to_render_static[i].second[j]->Run(action, this->to_render_static);
         }
     }
 }

@@ -13,11 +13,12 @@ class Dynamic: public Render {
 
     public:    
         void Init(int32_t x, int32_t y, int32_t* health, bool anchor, bool is_can_collide, std::vector<int32_t>* collide_masks, std::string texture) override;
-        void Run(const std::vector<std::pair<int, std::vector<Static*>>>& static_objects);
+        void Run(const std::vector<std::pair<int, std::vector<Static*>>>& static_objects, const std::vector<Dynamic*> dynamic_objects);
         void Display() override;
         void Movement(); 
 
-        void physics(const std::vector<std::pair<int, std::vector<Static*>>>& static_objects);
+        void physics(const std::vector<std::pair<int, std::vector<Static*>>>& static_objects, const std::vector<Dynamic*> dynamic_objects);
+        void physic_collide(const std::vector<std::pair<int, std::vector<Static*>>>& static_objects, const std::vector<Dynamic*> dynamic_objects);
 
     private:
         int32_t x;

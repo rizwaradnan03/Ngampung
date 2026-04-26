@@ -39,12 +39,26 @@ void Static::set_y(int32_t y){
     this->y = y;
 }
 
-void Static::Run(std::string *action){
+std::vector<int32_t>* Static::get_collide_masks(){
+    return this->collide_masks;
+}
+
+void Static::set_collide_masks(std::vector<int32_t>* collide_masks){
+    this->collide_masks = collide_masks;
+}
+
+void Static::Run(std::string *action, const std::vector<std::pair<int, std::vector<Static*>>>& static_objects){
+    this->physics(static_objects);
     this->action_check(action);
     this->Display();
 
     // delete checker
     this->Delete();
+}
+
+// we do need to implement stuff here
+void Static::physics(const std::vector<std::pair<int, std::vector<Static*>>>& static_objects){
+
 }
 
 void Static::Delete(){

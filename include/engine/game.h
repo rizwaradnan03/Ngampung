@@ -13,5 +13,6 @@ class Game {
 
     private:
         std::vector<std::pair<int, std::vector<Static*>>> to_render_static;
+        std::vector<Dynamic*> to_render_dynamic;
         Dynamic* player;
 };

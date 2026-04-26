@@ -3,4 +3,4 @@
 
 #pragma once
 
-void Play(std::string name);
+void Play(const std::string& name);
