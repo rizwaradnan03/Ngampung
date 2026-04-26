@@ -3,12 +3,13 @@
 #include <initial.h>
 #include <iostream>
 
-void Static::Init(int32_t x, int32_t y, int32_t* health, bool anchor, bool is_can_collide, std::vector<int32_t>* collide_masks, std::string texture){
+void Static::Init(int32_t x, int32_t y, int32_t* health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture){
     this->x = x;
     this->y = y;
     this->anchor = anchor;
     this->is_can_collide = is_can_collide;
     this->collide_masks = collide_masks;
+    this->layer = layer;
 
     if(health != nullptr){
         this->health = health;
@@ -39,6 +40,23 @@ void Static::set_y(int32_t y){
     this->y = y;
 }
 
+int32_t Static::get_layer(){
+    return this->layer;
+}
+
+void Static::set_layer(int32_t layer){
+    this->layer = layer;
+}
+
+bool Static::get_is_can_collide(){
+    return this->is_can_collide;
+}
+
+void Static::set_is_can_collide(bool is_can_collide){
+    this->is_can_collide = is_can_collide;
+}
+
+
 std::vector<int32_t>* Static::get_collide_masks(){
     return this->collide_masks;
 }
@@ -47,7 +65,7 @@ void Static::set_collide_masks(std::vector<int32_t>* collide_masks){
     this->collide_masks = collide_masks;
 }
 
-void Static::Run(std::string *action, const std::vector<std::pair<int, std::vector<Static*>>>& static_objects){
+void Static::Run(std::string *action, const std::vector<Static*>& static_objects){
     this->physics(static_objects);
     this->action_check(action);
     this->Display();
@@ -57,7 +75,7 @@ void Static::Run(std::string *action, const std::vector<std::pair<int, std::vect
 }
 
 // we do need to implement stuff here
-void Static::physics(const std::vector<std::pair<int, std::vector<Static*>>>& static_objects){
+void Static::physics(const std::vector<Static*>& static_objects){
 
 }
 

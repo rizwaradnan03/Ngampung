@@ -15,7 +15,7 @@ std::vector<Static*> RunStarter(){
     while(cur_y < 600){
         while(cur_x <= 780){
             // Static* block = new Static();
-            // block->Init(cur_x, cur_y, &h, true, true, "BLOCK_face");
+            // block->Init(cur_x, cur_y, &h, true, true, 2, "BLOCK_face");
 
             // tmp.push_back(block);
             cur_x += 30;
@@ -41,14 +41,14 @@ void Game::Start(){
 
     std::vector<Static*> value = RunStarter();
 
-    this->to_render_static.push_back(std::make_pair(1, value));
+    this->to_render_static = value;
 
     Dynamic* player = new Dynamic();
     int32_t h = 100;
 
     std::vector<int32_t> masks = {1, 2, 3};
 
-    player->Init(30, 0, &h, false, true, &masks, "BLOCK_face");
+    player->Init(30, 0, &h, false, false, 2, &masks, "BLOCK_face");
 
     this->player = player;
 
@@ -70,8 +70,6 @@ void Game::Start(){
 
 void Game::Habit(std::string* action){
     for(int i = 0;i < this->to_render_static.size();i++){
-        for(int j = 0;j < this->to_render_static[i].second.size();j++){
-            this->to_render_static[i].second[j]->Run(action, this->to_render_static);
-        }
+        this->to_render_static[i]->Run(action, to_render_static);
     }
 }
