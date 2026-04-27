@@ -2,7 +2,7 @@
 #include <iostream>
 #include <initial.h>
 
-void Render::Init(int32_t x, int32_t y, int32_t* health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture){
+void Render::Init(int32_t x, int32_t y, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture){
     this->x = x;
     this->y = y;
     this->anchor = anchor;

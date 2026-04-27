@@ -4,7 +4,7 @@
 #include <iostream>
 #include <engine/audio.h>
 
-void Dynamic::Init(int32_t x, int32_t y, int32_t* health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture){
+void Dynamic::Init(int32_t x, int32_t y, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture){
     this->x = x;
     this->y = y;
     this->anchor = anchor;
@@ -27,6 +27,22 @@ int32_t Dynamic::get_layer(){
 
 void Dynamic::set_layer(int32_t layer){
     this->layer = layer;
+}
+
+int32_t Dynamic::get_x(){
+    return this->x;
+}
+
+void Dynamic::set_x(int32_t x){
+    this->x = x;
+}
+
+int32_t Dynamic::get_y(){
+    return this->y;
+}
+
+void Dynamic::set_y(int32_t y){
+    this->y = y;
 }
 
 bool Dynamic::get_is_can_collide(){

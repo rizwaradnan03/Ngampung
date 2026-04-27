@@ -3,17 +3,14 @@
 #include <initial.h>
 #include <iostream>
 
-void Static::Init(int32_t x, int32_t y, int32_t* health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture){
+void Static::Init(int32_t x, int32_t y, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture){
     this->x = x;
     this->y = y;
     this->anchor = anchor;
     this->is_can_collide = is_can_collide;
     this->collide_masks = collide_masks;
     this->layer = layer;
-
-    if(health != nullptr){
-        this->health = health;
-    }
+    this->health = health;
 
     auto tex = G_initial->find_block_by_name(texture);
     if(tex == nullptr) {
@@ -80,7 +77,7 @@ void Static::physics(const std::vector<Static*>& static_objects){
 }
 
 void Static::Delete(){
-    if(*this->health <= 0){
+    if(this->health <= 0){
         delete this;
     }
 }
@@ -95,9 +92,7 @@ void Static::Display(){
 
 void Static::affect_by_action(std::string action){
     if(action == "ACT_HIT"){
-        if(this->health != nullptr){
-            *this->health -= 1;
-        }
+        this->health -= 1;
     }
 }
 

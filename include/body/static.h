@@ -11,7 +11,7 @@ class Static: public Render {
     using Render::Run;
 
     public:
-        void Init(int32_t x, int32_t y, int32_t* health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture) override;
+        void Init(int32_t x, int32_t y, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture) override;
         void Display() override;
         void Delete() override;
         void Run(std::string* action, const std::vector<Static*>& static_objects);
@@ -46,6 +46,6 @@ class Static: public Render {
         bool is_can_collide;
         std::vector<int32_t>* collide_masks;
 
-        int32_t* health;
+        int32_t health;
         Texture texture;
 };

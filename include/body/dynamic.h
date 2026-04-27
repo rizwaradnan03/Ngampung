@@ -12,13 +12,19 @@ class Dynamic: public Render {
     using Render::Init;
 
     public:    
-        void Init(int32_t x, int32_t y, int32_t* health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture) override;
+        void Init(int32_t x, int32_t y, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture) override;
         void Run(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
         void Display() override;
         void Movement(); 
 
         int32_t get_layer();
         void set_layer(int32_t layer);
+
+        int32_t get_x();
+        void set_x(int32_t x);
+
+        int32_t get_y();
+        void set_y(int32_t y);
 
         bool get_is_can_collide();
         void set_is_can_collide(bool is_can_collide);
@@ -34,7 +40,7 @@ class Dynamic: public Render {
         int32_t layer;
         int32_t x;
         int32_t y;
-        int32_t* health;
+        int32_t health;
         bool anchor;
         bool is_can_collide;
         std::vector<int32_t>* collide_masks;
