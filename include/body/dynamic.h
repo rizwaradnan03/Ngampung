@@ -6,6 +6,7 @@
 #include <body/static.h>
 #include <utility>
 #include <struct/dynamic.h>
+#include <chrono>
 
 #pragma once
 
@@ -39,6 +40,15 @@ class Dynamic: public Render {
         bool get_anchor();
         void set_anchor(bool anchor);
 
+        std::string get_movement_action();
+        void set_movement_action(std::string movement_action);
+
+        std::string get_movement_direction();
+        void set_movement_direction(std::string movement_direction);
+
+        std::chrono::time_point<std::chrono::high_resolution_clock> get_start_jump();
+        void set_start_jump(std::chrono::time_point<std::chrono::high_resolution_clock> start_jump);
+
         void physics(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
         void physic_collide(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
         void gravity(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
@@ -50,7 +60,11 @@ class Dynamic: public Render {
         int32_t w;
         int32_t h;
         int32_t health;
-        
+
+        std::chrono::time_point<std::chrono::high_resolution_clock> start_jump;
+        std::string movement_action;
+        std::string movement_direction;
+
         bool anchor;
         
         bool is_can_collide;

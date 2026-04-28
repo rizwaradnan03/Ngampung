@@ -17,4 +17,9 @@ namespace System {
     
         std::cout << "LOG (" << (type == true ? "Berhasil" : "Gagal") << ") " << message << std::endl;
     }
+
+    std::chrono::time_point<std::chrono::high_resolution_clock> current_time(){
+        auto time = std::chrono::high_resolution_clock::now();
+        return time;
+    }
 }

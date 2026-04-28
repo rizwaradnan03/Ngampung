@@ -81,6 +81,30 @@ void Dynamic::set_anchor(bool anchor){
     this->anchor = anchor;
 }
 
+std::string Dynamic::get_movement_action(){
+    return this->movement_action;
+}
+
+void Dynamic::set_movement_action(std::string movement_action){
+    this->movement_action = movement_action;
+}
+
+std::string Dynamic::get_movement_direction(){
+    return this->movement_direction;
+}
+
+void Dynamic::set_movement_direction(std::string movement_direction){
+    this->movement_direction = movement_direction;
+}
+
+std::chrono::time_point<std::chrono::high_resolution_clock> Dynamic::get_start_jump(){
+    return this->start_jump;
+}
+
+void Dynamic::set_start_jump(std::chrono::time_point<std::chrono::high_resolution_clock> start_jump){
+    this->start_jump = start_jump;
+}
+
 void Dynamic::Run(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
     this->physics(static_objects, dynamic_objects);
     this->Display();
@@ -126,7 +150,7 @@ void Dynamic::physic_collide(const std::vector<Static*>& static_objects, const s
             }
         }
 
-        if(d.is_found_bottom == false){
+        if(d.is_found_bottom == false && this->get_movement_action() == "STAY"){
             this->y += 3.0f;
         }
     }
@@ -139,8 +163,8 @@ void Dynamic::gravity(const std::vector<Static*>& static_objects, const std::vec
 }
 
 void Dynamic::Display(){
-    Rectangle source = {(float)this->x, (float)this->y, (float)this->m_body.width, (float)this->m_body.height};
-    Rectangle dest = {(float)this->x, (float)this->y, 30.0f, 30.0f};
+    Rectangle source = {0.0f, 0.0f, (float)this->m_body.width, (float)this->m_body.height};
+    Rectangle dest = {(float)this->x, (float)this->y, (float)this->get_w(), (float)this->get_h()};
     Vector2 origin = {0, 0};
 
     DrawTexturePro(this->u_head, source, dest, origin, 0.0f, WHITE);
@@ -157,13 +181,26 @@ void Dynamic::Display(){
 
 void Dynamic::Movement(){
     if(IsKeyDown(KEY_RIGHT)){
+        this->set_movement_direction("RIGHT");
         this->x += 2.0f;
     }else if(IsKeyDown(KEY_LEFT)){
+        this->set_movement_direction("LEFT");
         this->x -= 2.0f;
     }
 
-    if(IsKeyPressed(KEY_SPACE)){
-        Play("die");
+    if(IsKeyPressed(KEY_SPACE) && this->get_movement_action() != "JUMP"){
+        this->set_start_jump(System::current_time());
+        Play("jump");
+        this->set_movement_action("JUMP");
         this->y -= 7.0f;
+    }
+
+    if(this->get_movement_action() == "JUMP"){
+        auto current_time = System::current_time();
+        std::chrono::duration<float> differ = current_time - this->get_start_jump();
+        
+        if(differ.count() >= 0.3f){
+            this->set_movement_action("STAY");
+        }
     }
 }

@@ -17,7 +17,7 @@ std::vector<Static*> RunStarter(){
     while(cur_y < 600){
         while(cur_x <= 780){
             Static* block = new Static();
-            block->Init(cur_x, cur_y, 30, 30, h, true, true, 1, &masks, "BLOCK_face");
+            block->Init(cur_x, cur_y, 30, 30, h, true, true, 1, &masks, "BLOCK_dirt");
 
             tmp.push_back(block);
             cur_x += 30;
@@ -48,7 +48,7 @@ void Game::Start(){
 
     std::vector<int32_t> masks = {1, 2, 3};
 
-    player->Init(30, 0, 30, 30, 100, false, true, 1, &masks, "BLOCK_face");
+    player->Init(30, 0, 30, 30, 100, false, true, 1, &masks, "BLOCK_player");
 
     this->player = player;
 
