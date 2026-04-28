@@ -4,6 +4,7 @@
 #include <iostream>
 #include <engine/audio.h>
 #include <namespace/physic.h>
+#include <namespace/system.h>
 
 void Dynamic::Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture){
     this->x = x;
@@ -87,29 +88,52 @@ void Dynamic::Run(const std::vector<Static*>& static_objects, const std::vector<
 
 void Dynamic::physics(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
     this->physic_collide(static_objects, dynamic_objects);
-    this->gravity(static_objects, dynamic_objects);
 }
 
-// check the collide
 void Dynamic::physic_collide(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
-    if(this->get_is_can_collide() == true){
-        for(int i = 0;i < static_objects.size() + dynamic_objects.size();i++){
-            if(i < static_objects.size()){
-                if(static_objects[i]->get_layer() == this->layer && static_objects[i]->get_is_can_collide() == true){
-                    std::pair<bool, std::string*> check_collide = Physic::is_colliding(this, static_objects[i]);
-                }
+    if(this->get_is_can_collide() == true && this->get_anchor() == false){
+        S_Dynamic::Gravity d = {false, false, false, false};
+
+        int32_t s_obj_z = static_objects.size();
+        int32_t d_obj_z = dynamic_objects.size();
+        for(int i = 0;i < s_obj_z + d_obj_z;i++){
+            Render* obj;
+            if(i < s_obj_z){
+                obj = static_objects[i];
             }else{
-                if(dynamic_objects[i - static_objects.size()]->get_layer() == this->layer && dynamic_objects[i - static_objects.size()]->get_is_can_collide() == true){
-                    std::pair<bool, std::string*> check_collide = Physic::is_colliding(this, dynamic_objects[i - static_objects.size()]);
+                obj = dynamic_objects[i - s_obj_z];
+            }
+
+            if(obj->get_layer() == this->layer && obj->get_is_can_collide() == true){
+                std::pair<bool, std::string> cc = Physic::is_colliding(this, obj);
+                if(cc.first == true){
+                    if(cc.second == "BOTTOM"){
+                        d.is_found_bottom = true;
+                    }
+
+                    if(cc.second == "TOP"){
+                        d.is_found_top = true;
+                    }
+
+                    if(cc.second == "RIGHT"){
+                        d.is_found_right = true;
+                    }
+
+                    if(cc.second == "LEFT"){
+                        d.is_found_left = true;
+                    }
                 }
             }
+        }
+
+        if(d.is_found_bottom == false){
+            this->y += 3.0f;
         }
     }
 }
 
 void Dynamic::gravity(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
     if(this->get_anchor() == false){
-        // gotta implement the gravity with checking if is there collide with any block
         this->y += 1.0f;
     }
 }
@@ -133,13 +157,13 @@ void Dynamic::Display(){
 
 void Dynamic::Movement(){
     if(IsKeyDown(KEY_RIGHT)){
-        this->x += 1.0f;
+        this->x += 2.0f;
     }else if(IsKeyDown(KEY_LEFT)){
-        this->x -= 1.0f;
+        this->x -= 2.0f;
     }
 
     if(IsKeyPressed(KEY_SPACE)){
         Play("die");
-        this->y -= 10.0f;
+        this->y -= 7.0f;
     }
 }

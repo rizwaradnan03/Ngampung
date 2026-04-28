@@ -27,6 +27,9 @@ class Render {
         virtual int32_t get_h();
         virtual void set_h(int32_t h);
 
+        virtual bool get_is_can_collide();
+        virtual void set_is_can_collide(bool is_can_collide);
+
     private:
         int32_t layer;
         int32_t x;
@@ -37,4 +40,7 @@ class Render {
         bool anchor;
         bool is_can_collide;
         std::vector<int32_t>* collide_masks;
+
+        int32_t amount;
+
 };

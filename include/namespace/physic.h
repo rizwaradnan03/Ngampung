@@ -5,5 +5,5 @@
 #pragma once
 
 namespace Physic {
-    std::pair<bool, std::string*> is_colliding(Render* me, Render* target);
+    std::pair<bool, std::string> is_colliding(Render* me, Render* target);
 }

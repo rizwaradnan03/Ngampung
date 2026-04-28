@@ -48,7 +48,7 @@ void Game::Start(){
 
     std::vector<int32_t> masks = {1, 2, 3};
 
-    player->Init(30, 0, 30, 30, 100, false, false, 2, &masks, "BLOCK_face");
+    player->Init(30, 0, 30, 30, 100, false, true, 1, &masks, "BLOCK_face");
 
     this->player = player;
 

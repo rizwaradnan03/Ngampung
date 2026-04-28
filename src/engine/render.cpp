@@ -61,6 +61,14 @@ void Render::set_layer(int32_t layer){
     this->layer = layer;
 }
 
+bool Render::get_is_can_collide(){
+    return this->is_can_collide;
+}
+
+void Render::set_is_can_collide(bool is_can_collide){
+    this->is_can_collide = is_can_collide;
+}
+
 void Render::Display(){
     Rectangle source = {0, 0, (float)this->texture.width, (float)this->texture.height};
     Rectangle dest = {(float)this->x, (float)this->y, (float)this->w, (float)this->h};

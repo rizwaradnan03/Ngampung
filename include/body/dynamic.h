@@ -5,6 +5,7 @@
 #include <vector>
 #include <body/static.h>
 #include <utility>
+#include <struct/dynamic.h>
 
 #pragma once
 
@@ -49,21 +50,22 @@ class Dynamic: public Render {
         int32_t w;
         int32_t h;
         int32_t health;
+        
         bool anchor;
+        
         bool is_can_collide;
         std::vector<int32_t>* collide_masks;
 
-        // upper body
         Texture u_head;
         Texture u_face;
         Texture u_neck;
         
-        // mid body
         Texture m_body;
         Texture m_r_hand;
         Texture m_l_hand;
 
-        // lower body
         Texture l_leg;
         Texture l_foot;
+
+        std::vector<Render> inventory;
 };
