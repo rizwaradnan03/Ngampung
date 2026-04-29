@@ -1,7 +1,7 @@
-#include "initial.h"
-#include "raylib.h"
-#include "iostream"
-#include "utility"
+#include <initial.h>
+#include <raylib.h>
+#include <iostream>
+#include <utility>
 
 Initial* G_initial = nullptr;
 

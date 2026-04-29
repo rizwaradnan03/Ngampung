@@ -82,6 +82,14 @@ void Dynamic::set_anchor(bool anchor){
     this->anchor = anchor;
 }
 
+std::vector<Render*> Dynamic::get_inventory(){
+    return this->inventory;
+}
+
+void Dynamic::set_inventory(std::vector<Render*> inventory){
+    this->inventory = inventory;
+}
+
 std::string Dynamic::get_movement_action(){
     return this->movement_action;
 }

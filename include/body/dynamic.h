@@ -46,6 +46,9 @@ class Dynamic: public Render {
         bool get_anchor();
         void set_anchor(bool anchor);
 
+        std::vector<Render*> get_inventory();
+        void set_inventory(std::vector<Render*> inventory);
+
         std::string get_movement_action();
         void set_movement_action(std::string movement_action);
 
@@ -88,5 +91,5 @@ class Dynamic: public Render {
         Texture l_leg;
         Texture l_foot;
 
-        std::vector<Render> inventory;
+        std::vector<Render*> inventory;
 };
