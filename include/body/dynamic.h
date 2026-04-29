@@ -34,6 +34,12 @@ class Dynamic: public Render {
         int32_t get_h() override;
         void set_h(int32_t h) override;
 
+        int32_t get_health();
+        void set_health(int32_t health);
+
+        int32_t get_jump_amount();
+        void set_jump_amount(int32_t jump_amount);
+
         bool get_is_can_collide();
         void set_is_can_collide(bool is_can_collide);
 
@@ -60,6 +66,7 @@ class Dynamic: public Render {
         int32_t w;
         int32_t h;
         int32_t health;
+        int32_t jump_amount;
 
         std::chrono::time_point<std::chrono::high_resolution_clock> start_jump;
         std::string movement_action;

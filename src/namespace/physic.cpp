@@ -1,9 +1,7 @@
 #include <namespace/physic.h>
 
-namespace Physic
-{
-    std::pair<bool, std::string> is_colliding(Render *me, Render *target)
-    {
+namespace Physic{
+    std::pair<bool, std::string> is_colliding(Render *me, Render *target){
         int32_t min_x_me = me->get_x() - (me->get_w() / 2);
         int32_t max_x_me = me->get_x() + (me->get_w() / 2);
         int32_t min_y_me = me->get_y() - (me->get_h() / 2);

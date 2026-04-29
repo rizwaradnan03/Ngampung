@@ -2,20 +2,21 @@
 #include <initial.h>
 #include <namespace/system.h>
 #include <iostream>
-#include <engine/audio.h>
+#include <namespace/audio.h>
 #include <namespace/physic.h>
 #include <namespace/system.h>
 
 void Dynamic::Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture){
-    this->x = x;
-    this->y = y;
-    this->w = w;
-    this->h = h;
-    this->anchor = anchor;
-    this->is_can_collide = is_can_collide;
-    this->health = health;
-    this->layer = layer;
-
+    this->set_x(x);
+    this->set_y(y);
+    this->set_w(w);
+    this->set_h(h);
+    this->set_anchor(anchor);
+    this->set_is_can_collide(is_can_collide);
+    this->set_health(health);
+    this->set_layer(layer);
+    this->set_jump_amount(1);
+    
     auto tex = G_initial->find_block_by_name(texture);
     if(tex == nullptr){
         System::Log(false, "Gagal Load Texture!");
@@ -97,6 +98,22 @@ void Dynamic::set_movement_direction(std::string movement_direction){
     this->movement_direction = movement_direction;
 }
 
+int32_t Dynamic::get_health(){
+    return this->health;
+}
+
+void Dynamic::set_health(int32_t health){
+    this->health = health;
+}
+
+int32_t Dynamic::get_jump_amount(){
+    return this->jump_amount;
+}
+
+void Dynamic::set_jump_amount(int32_t jump_amount){
+    this->jump_amount = jump_amount;
+}
+
 std::chrono::time_point<std::chrono::high_resolution_clock> Dynamic::get_start_jump(){
     return this->start_jump;
 }
@@ -128,7 +145,7 @@ void Dynamic::physic_collide(const std::vector<Static*>& static_objects, const s
                 obj = dynamic_objects[i - s_obj_z];
             }
 
-            if(obj->get_layer() == this->layer && obj->get_is_can_collide() == true){
+            if(obj->get_layer() == this->get_layer() && obj->get_is_can_collide() == true){
                 std::pair<bool, std::string> cc = Physic::is_colliding(this, obj);
                 if(cc.first == true){
                     if(cc.second == "BOTTOM"){
@@ -151,7 +168,10 @@ void Dynamic::physic_collide(const std::vector<Static*>& static_objects, const s
         }
 
         if(d.is_found_bottom == false && this->get_movement_action() == "STAY"){
-            this->y += 3.0f;
+            this->set_y(this->get_y() + 3.0f);
+        }else if(d.is_found_bottom == true){
+            // resetting to the default
+            this->set_jump_amount(1);
         }
     }
 }
@@ -164,7 +184,7 @@ void Dynamic::gravity(const std::vector<Static*>& static_objects, const std::vec
 
 void Dynamic::Display(){
     Rectangle source = {0.0f, 0.0f, (float)this->m_body.width, (float)this->m_body.height};
-    Rectangle dest = {(float)this->x, (float)this->y, (float)this->get_w(), (float)this->get_h()};
+    Rectangle dest = {(float)this->get_x(), (float)this->get_y(), (float)this->get_w(), (float)this->get_h()};
     Vector2 origin = {0, 0};
 
     DrawTexturePro(this->u_head, source, dest, origin, 0.0f, WHITE);
@@ -182,17 +202,19 @@ void Dynamic::Display(){
 void Dynamic::Movement(){
     if(IsKeyDown(KEY_RIGHT)){
         this->set_movement_direction("RIGHT");
-        this->x += 2.0f;
+        this->set_x(this->get_x() + 2.0f);
     }else if(IsKeyDown(KEY_LEFT)){
         this->set_movement_direction("LEFT");
-        this->x -= 2.0f;
+        this->set_x(this->get_x() - 2.0f);
     }
 
-    if(IsKeyPressed(KEY_SPACE) && this->get_movement_action() != "JUMP"){
+    if(IsKeyPressed(KEY_SPACE) && this->get_movement_action() != "JUMP" && this->get_jump_amount() > 0){
         this->set_start_jump(System::current_time());
-        Play("jump");
+        Audio::play("jump");
         this->set_movement_action("JUMP");
-        this->y -= 7.0f;
+        this->set_y(this->get_y() - 7.0f);
+
+        this->set_jump_amount(this->get_jump_amount() - 1);
     }
 
     if(this->get_movement_action() == "JUMP"){
