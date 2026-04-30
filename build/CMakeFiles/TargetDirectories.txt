@@ -1,0 +1,9 @@
+C:/Users/Laris/Documents/Ngampung/build/CMakeFiles/Ngampung.dir
+C:/Users/Laris/Documents/Ngampung/build/CMakeFiles/package.dir
+C:/Users/Laris/Documents/Ngampung/build/CMakeFiles/package_source.dir
+C:/Users/Laris/Documents/Ngampung/build/CMakeFiles/edit_cache.dir
+C:/Users/Laris/Documents/Ngampung/build/CMakeFiles/rebuild_cache.dir
+C:/Users/Laris/Documents/Ngampung/build/CMakeFiles/list_install_components.dir
+C:/Users/Laris/Documents/Ngampung/build/CMakeFiles/install.dir
+C:/Users/Laris/Documents/Ngampung/build/CMakeFiles/install/local.dir
+C:/Users/Laris/Documents/Ngampung/build/CMakeFiles/install/strip.dir

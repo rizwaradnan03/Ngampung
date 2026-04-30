@@ -1,0 +1,13 @@
+# ninja log v7
+30	1231	7992161979935987	CMakeFiles/Ngampung.dir/src/engine/gui.cpp.obj	aa1dfd14ebfa9d22
+53	1284	7992161980247671	CMakeFiles/Ngampung.dir/src/gui/container.cpp.obj	fde0b84ffaf85eac
+46	1389	7992161980008212	CMakeFiles/Ngampung.dir/src/engine/render.cpp.obj	2b30e1d683c7cb73
+14	1423	7992161979692040	CMakeFiles/Ngampung.dir/src/body/static.cpp.obj	65fb28acfafa4484
+7	1720	7992161979624597	CMakeFiles/Ngampung.dir/src/body/dynamic.cpp.obj	22a5f10c92067a46
+20	1882	7992161979747940	CMakeFiles/Ngampung.dir/src/engine/game.cpp.obj	d56fe80c28fd2a75
+1390	2353	7992161993452945	CMakeFiles/Ngampung.dir/src/namespace/physic.cpp.obj	90b4644047a9e712
+1262	2433	7992161992318720	CMakeFiles/Ngampung.dir/src/main.cpp.obj	65341ca05d388cdc
+1424	2464	7992161993789729	CMakeFiles/Ngampung.dir/src/namespace/system.cpp.obj	6d600585d1cf9f27
+1311	2519	7992161992727458	CMakeFiles/Ngampung.dir/src/namespace/audio.cpp.obj	d51a6c838968cad
+1836	2974	7992161998056448	CMakeFiles/Ngampung.dir/src/setup/initial.cpp.obj	423bacd87da010ef
+2974	3255	7992162009289687	Ngampung.exe	62b95684250b40b6
