@@ -66,6 +66,8 @@ void Game::Start(){
 
     while (!WindowShouldClose()){
         this->background_action();
+
+        player->box_collide_checker(this->to_render_static, this->to_render_dynamic);
         player->Movement();
 
         BeginDrawing();

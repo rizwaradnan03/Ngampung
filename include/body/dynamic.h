@@ -46,6 +46,9 @@ class Dynamic: public Render {
         bool get_anchor();
         void set_anchor(bool anchor);
 
+        std::pair<bool, bool> get_available_direction();
+        void set_available_direction(std::pair<bool, bool> movement_direction);
+
         std::vector<Render*> get_inventory();
         void set_inventory(std::vector<Render*> inventory);
 
@@ -59,7 +62,7 @@ class Dynamic: public Render {
         void set_start_jump(std::chrono::time_point<std::chrono::high_resolution_clock> start_jump);
 
         void physics(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
-        void physic_collide(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
+        void box_collide_checker(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
         void gravity(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
 
     private:
@@ -70,6 +73,8 @@ class Dynamic: public Render {
         int32_t h;
         int32_t health;
         int32_t jump_amount;
+
+        std::pair<bool, bool> available_direction;
 
         std::chrono::time_point<std::chrono::high_resolution_clock> start_jump;
         std::string movement_action;

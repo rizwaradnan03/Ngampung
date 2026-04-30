@@ -82,6 +82,14 @@ void Dynamic::set_anchor(bool anchor){
     this->anchor = anchor;
 }
 
+std::pair<bool, bool> Dynamic::get_available_direction(){
+    return this->available_direction;
+}
+
+void Dynamic::set_available_direction(std::pair<bool, bool> available_direction){
+    this->available_direction = available_direction;
+}
+
 std::vector<Render*> Dynamic::get_inventory(){
     return this->inventory;
 }
@@ -136,10 +144,10 @@ void Dynamic::Run(const std::vector<Static*>& static_objects, const std::vector<
 }
 
 void Dynamic::physics(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
-    this->physic_collide(static_objects, dynamic_objects);
+    // this->box_collide_checker(static_objects, dynamic_objects);
 }
 
-void Dynamic::physic_collide(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
+void Dynamic::box_collide_checker(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
     if(this->get_is_can_collide() == true && this->get_anchor() == false){
         S_Dynamic::Gravity d = {false, false, false, false};
 
@@ -150,6 +158,10 @@ void Dynamic::physic_collide(const std::vector<Static*>& static_objects, const s
             if(i < s_obj_z){
                 obj = static_objects[i];
             }else{
+                if(obj == this){
+                    continue;
+                }
+
                 obj = dynamic_objects[i - s_obj_z];
             }
 
@@ -175,12 +187,22 @@ void Dynamic::physic_collide(const std::vector<Static*>& static_objects, const s
             }
         }
 
-        if(d.is_found_bottom == false && this->get_movement_action() == "STAY"){
+        if(d.is_found_bottom == false){
             this->set_y(this->get_y() + 3.0f);
         }else if(d.is_found_bottom == true){
-            // resetting to the default
+            if(this->get_y() % 30 != 0){
+                int calc = this->get_y();
+                while(calc % 30 != 0){
+                    calc--;
+                }
+
+                this->set_y(calc);
+            }
+
             this->set_jump_amount(1);
         }
+
+        this->set_available_direction(std::make_pair(d.is_found_left == true ? false : true, d.is_found_right == true ? false : true));
     }
 }
 
@@ -208,10 +230,12 @@ void Dynamic::Display(){
 }
 
 void Dynamic::Movement(){
-    if(IsKeyDown(KEY_RIGHT)){
+    std::pair<bool, bool> avail_x = this->get_available_direction();
+
+    if(IsKeyDown(KEY_RIGHT) && avail_x.second == true){
         this->set_movement_direction("RIGHT");
         this->set_x(this->get_x() + 2.0f);
-    }else if(IsKeyDown(KEY_LEFT)){
+    }else if(IsKeyDown(KEY_LEFT) && avail_x.first == true){
         this->set_movement_direction("LEFT");
         this->set_x(this->get_x() - 2.0f);
     }
