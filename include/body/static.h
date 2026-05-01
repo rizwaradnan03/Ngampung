@@ -1,14 +1,14 @@
 #include <raylib.h>
 #include <string>
-#include <engine/render.h>
+#include <body/body.h>
 #include <cstdint>
 #include <vector>
 
 #pragma once
 
-class Static: public Render {
-    using Render::Init;
-    using Render::Run;
+class Static: public Body {
+    using Body::Init;
+    using Body::Run;
 
     public:
         void Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture) override;

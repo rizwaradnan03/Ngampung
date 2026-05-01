@@ -1,11 +1,8 @@
-#include <string>
-#include <raylib.h>
-#include <cstdint>
-#include <vector>
+#include <engine/render.h>
 
 #pragma once
 
-class Render {
+class Body: public Render {
     public:
         virtual void Display();
         virtual void Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture);
