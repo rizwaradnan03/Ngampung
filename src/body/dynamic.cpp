@@ -153,7 +153,7 @@ void Dynamic::set_start_jump(std::chrono::time_point<std::chrono::high_resolutio
 }
 
 void Dynamic::Run(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
-    // checking availabe
+    this->mouse_movement(static_objects, dynamic_objects);
     this->physics(static_objects, dynamic_objects);
     this->Display();
 }
@@ -314,10 +314,10 @@ void Dynamic::Display(){
 void Dynamic::Movement(){
     std::pair<bool, bool> avail_x = this->get_available_direction();
 
-    if(IsKeyDown(KEY_RIGHT) && avail_x.second == true){
+    if(IsKeyDown(KEY_D) && avail_x.second == true){
         this->set_movement_direction("RIGHT");
         this->set_x(this->get_x() + 2.0f);
-    }else if(IsKeyDown(KEY_LEFT) && avail_x.first == true){
+    }else if(IsKeyDown(KEY_A) && avail_x.first == true){
         this->set_movement_direction("LEFT");
         this->set_x(this->get_x() - 2.0f);
     }
@@ -338,6 +338,19 @@ void Dynamic::Movement(){
             this->set_movement_action("STAY");
         }else if(differ.count() < 0.3f){
             this->set_y(this->get_y() - 7.0f);
+        }
+    }
+}
+
+void Dynamic::mouse_movement(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
+    int32_t max_x = 500;
+    int32_t max_y = 410;
+    Vector2 mouse_pos = GetMousePosition();
+
+    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+        // boutta implement hit / wrenched object
+        if(mouse_pos.x >= max_x - 200 && mouse_pos.x <= max_x && mouse_pos.y >= max_y - 200 && mouse_pos.y <= max_y){
+
         }
     }
 }

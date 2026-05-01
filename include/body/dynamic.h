@@ -19,7 +19,9 @@ class Dynamic: public Body {
         void Run(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
         void Display() override;
         void Delete() override;
+
         void Movement(); 
+        void mouse_movement(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
 
         int32_t get_layer() override;
         void set_layer(int32_t layer) override;

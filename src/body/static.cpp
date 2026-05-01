@@ -105,7 +105,7 @@ void Static::physics(const std::vector<Static*>& static_objects){
 
 void Static::Delete(){
     if(this->health <= 0){
-        delete this;
+        this->set_is_free(true);
     }
 }
 
