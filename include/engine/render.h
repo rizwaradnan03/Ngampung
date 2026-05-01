@@ -30,6 +30,9 @@ class Render {
         virtual bool get_is_can_collide();
         virtual void set_is_can_collide(bool is_can_collide);
 
+        virtual bool get_is_free();
+        virtual void set_is_free(bool is_free);
+
     private:
         int32_t layer;
         int32_t x;
@@ -39,6 +42,7 @@ class Render {
         Texture texture;
         bool anchor;
         bool is_can_collide;
+        bool is_free;
         std::vector<int32_t>* collide_masks;
 
         int32_t amount;

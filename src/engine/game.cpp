@@ -12,6 +12,11 @@ std::vector<Static*> RunStarter(){
 
     std::vector<int32_t> masks = {1, 2, 3};
 
+    Static* blck = new Static();
+    blck->Init(60, 240, 30, 30, h, true, true, 1, &masks, "BLOCK_dirt");
+
+    tmp.push_back(blck);
+
     int cur_x = 0;
     int cur_y = 300;
     while(cur_y < 600){
@@ -67,6 +72,13 @@ void Game::Start(){
     while (!WindowShouldClose()){
         this->background_action();
 
+        // checking
+        bool is_free = player->get_is_free();
+        if(is_free == true){
+            delete player;
+            player = nullptr;
+        }
+
         player->box_collide_checker(this->to_render_static, this->to_render_dynamic);
         player->Movement();
 
@@ -115,7 +127,16 @@ void Game::set_run_time(std::chrono::time_point<std::chrono::high_resolution_clo
 
 void Game::Habit(std::string* action){
     for(int i = 0;i < this->to_render_static.size();i++){
-        this->to_render_static[i]->Run(action, to_render_static);
+        Static* obj = this->to_render_static[i];
+
+        bool is_free = this->to_render_static[i]->get_is_free();
+        if(is_free == true){
+            delete this->to_render_static[i];
+            this->to_render_static.erase(this->to_render_static.begin() + i);
+        }else{
+            this->to_render_static[i]->Run(action, to_render_static);
+        }
+
     }
 }
 

@@ -39,6 +39,9 @@ class Static: public Render {
         bool get_is_can_collide();
         void set_is_can_collide(bool is_can_collide);
 
+        bool get_is_free() override;
+        void set_is_free(bool is_can_collide) override;
+
         std::vector<int32_t>* get_collide_masks();
         void set_collide_masks(std::vector<int32_t>* collide_masks);
 
@@ -52,6 +55,7 @@ class Static: public Render {
         int32_t h;
         bool anchor;
         bool is_can_collide;
+        bool is_free;
         std::vector<int32_t>* collide_masks;
 
         int32_t health;

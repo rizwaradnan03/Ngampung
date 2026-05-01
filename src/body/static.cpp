@@ -23,6 +23,15 @@ void Static::Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bo
     this->texture = *tex;
 }
 
+bool Static::get_is_free(){
+    return this->is_free;
+}
+
+void Static::set_is_free(bool is_free){
+    this->is_free = is_free;
+}
+
+
 int32_t Static::get_x(){
     return this->x;
 }

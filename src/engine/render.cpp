@@ -69,6 +69,13 @@ void Render::set_is_can_collide(bool is_can_collide){
     this->is_can_collide = is_can_collide;
 }
 
+bool Render::get_is_free(){
+    return this->is_free;
+}
+void Render::set_is_free(bool is_free){
+    this->is_free = is_free;
+}
+
 void Render::Display(){
     Rectangle source = {0, 0, (float)this->texture.width, (float)this->texture.height};
     Rectangle dest = {(float)this->x, (float)this->y, (float)this->w, (float)this->h};

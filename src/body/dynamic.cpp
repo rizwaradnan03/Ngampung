@@ -15,8 +15,9 @@ void Dynamic::Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, b
     this->set_is_can_collide(is_can_collide);
     this->set_health(health);
     this->set_layer(layer);
-    this->set_jump_amount(1);
-    
+    this->set_jump_amount(2);
+    this->set_is_free(false);
+
     auto tex = G_initial->find_block_by_name(texture);
     if(tex == nullptr){
         System::Log(false, "Gagal Load Texture!");
@@ -24,6 +25,11 @@ void Dynamic::Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, b
     }
 
     this->m_body = *tex;
+}
+
+void Dynamic::Delete(){
+    // Audio::play()
+    this->set_is_free(true);
 }
 
 int32_t Dynamic::get_layer(){
@@ -80,6 +86,14 @@ bool Dynamic::get_anchor(){
 
 void Dynamic::set_anchor(bool anchor){
     this->anchor = anchor;
+}
+
+bool Dynamic::get_is_free(){
+    return this->is_free;
+}
+
+void Dynamic::set_is_free(bool is_free){
+    this->is_free = is_free;
 }
 
 std::pair<bool, bool> Dynamic::get_available_direction(){
@@ -139,6 +153,7 @@ void Dynamic::set_start_jump(std::chrono::time_point<std::chrono::high_resolutio
 }
 
 void Dynamic::Run(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
+    // checking availabe
     this->physics(static_objects, dynamic_objects);
     this->Display();
 }
@@ -158,10 +173,6 @@ void Dynamic::box_collide_checker(const std::vector<Static*>& static_objects, co
             if(i < s_obj_z){
                 obj = static_objects[i];
             }else{
-                if(obj == this){
-                    continue;
-                }
-
                 obj = dynamic_objects[i - s_obj_z];
             }
 
@@ -187,11 +198,23 @@ void Dynamic::box_collide_checker(const std::vector<Static*>& static_objects, co
             }
         }
 
+        // STUCK HELPER SESSION XD
         if(d.is_found_bottom == false){
             this->set_y(this->get_y() + 3.0f);
         }else if(d.is_found_bottom == true){
             if(this->get_y() % 30 != 0){
-                int calc = this->get_y();
+                int32_t calc_bound = 30 * 0.25;
+                int32_t ctb = this->get_y();
+                while(ctb % 30 != 0){
+                    ctb--;
+                }
+
+                // getting over so we could determine as die
+                if(this->get_y() >= calc_bound + ctb){
+                    delete this;
+                }
+
+                int32_t calc = this->get_y();
                 while(calc % 30 != 0){
                     calc--;
                 }
@@ -200,6 +223,65 @@ void Dynamic::box_collide_checker(const std::vector<Static*>& static_objects, co
             }
 
             this->set_jump_amount(1);
+        }
+
+        if(d.is_found_left == true){
+            if(this->get_x() % 30 != 0){
+                int32_t calc = this->get_x();
+                while(calc % 30 != 0){
+                    calc++;
+                }
+
+                this->set_x(calc);
+            }
+        }
+
+        if(d.is_found_right == true){
+            int32_t calc = this->get_x();
+            if(calc <= 0){
+                calc *= -1;
+            }
+
+            if(calc % 30 != 0){
+                if(this->get_x() <= 0){
+                    calc = this->get_x();
+                }
+
+                while(true){
+                    bool is_val = false;
+                    
+                    if(calc <= 0){
+                        if((calc * -1) % 30 == 0){
+                            is_val = true;
+                        }
+                    }else{
+                        if(calc % 30 == 0){
+                            is_val = true;
+                        }
+                    }
+
+                    if(is_val == true){
+                        break;
+                    }
+
+                    calc--;
+                }
+
+                this->set_x(calc);
+            }
+        }
+
+        if(this->get_movement_action() == "JUMP"){
+            if(d.is_found_top == true){
+                if(this->get_y() % 30 != 0){
+                    int32_t calc = this->get_y();
+                    while(calc % 30 != 0){
+                        calc++;
+                    }
+    
+                    this->set_y(calc);
+                }
+            }
         }
 
         this->set_available_direction(std::make_pair(d.is_found_left == true ? false : true, d.is_found_right == true ? false : true));
@@ -244,7 +326,6 @@ void Dynamic::Movement(){
         this->set_start_jump(System::current_time());
         Audio::play("jump");
         this->set_movement_action("JUMP");
-        this->set_y(this->get_y() - 7.0f);
 
         this->set_jump_amount(this->get_jump_amount() - 1);
     }
@@ -252,9 +333,11 @@ void Dynamic::Movement(){
     if(this->get_movement_action() == "JUMP"){
         auto current_time = System::current_time();
         std::chrono::duration<float> differ = current_time - this->get_start_jump();
-        
+
         if(differ.count() >= 0.3f){
             this->set_movement_action("STAY");
+        }else if(differ.count() < 0.3f){
+            this->set_y(this->get_y() - 7.0f);
         }
     }
 }

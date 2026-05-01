@@ -17,6 +17,7 @@ class Dynamic: public Render {
         void Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture) override;
         void Run(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
         void Display() override;
+        void Delete() override;
         void Movement(); 
 
         int32_t get_layer() override;
@@ -46,6 +47,9 @@ class Dynamic: public Render {
         bool get_anchor();
         void set_anchor(bool anchor);
 
+        bool get_is_free() override;
+        void set_is_free(bool is_free) override;
+
         std::pair<bool, bool> get_available_direction();
         void set_available_direction(std::pair<bool, bool> movement_direction);
 
@@ -73,6 +77,8 @@ class Dynamic: public Render {
         int32_t h;
         int32_t health;
         int32_t jump_amount;
+        
+        bool is_free;
 
         std::pair<bool, bool> available_direction;
 
