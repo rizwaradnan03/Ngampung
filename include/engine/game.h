@@ -23,6 +23,9 @@ class Game {
         Dynamic* get_player();
         void set_player(Dynamic* player);
 
+        std::pair<std::string*, std::pair<int32_t, int32_t>> get_mouse();
+        void set_mouse(std::pair<std::string*, std::pair<int32_t, int32_t>> mouse);
+
         std::chrono::time_point<std::chrono::high_resolution_clock> get_run_time();
         void set_run_time(std::chrono::time_point<std::chrono::high_resolution_clock> value);
 
@@ -33,7 +36,8 @@ class Game {
         std::vector<Dynamic*> to_render_dynamic;
         std::chrono::time_point<std::chrono::high_resolution_clock> run_time;
 
-        Dynamic* player;
+        std::pair<std::string*, std::pair<int32_t, int32_t>> mouse;
 
+        Dynamic* player;
         Camera2D camera;
 };

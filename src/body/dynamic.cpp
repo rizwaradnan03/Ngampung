@@ -128,6 +128,14 @@ void Dynamic::set_movement_direction(std::string movement_direction){
     this->movement_direction = movement_direction;
 }
 
+std::string* Dynamic::get_mouse_action(){
+    return this->mouse_action;
+}
+
+void Dynamic::set_mouse_action(std::string* mouse_action){
+    this->mouse_action = mouse_action;
+}
+
 int32_t Dynamic::get_health(){
     return this->health;
 }
@@ -152,10 +160,89 @@ void Dynamic::set_start_jump(std::chrono::time_point<std::chrono::high_resolutio
     this->start_jump = start_jump;
 }
 
-void Dynamic::Run(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
-    this->mouse_movement(static_objects, dynamic_objects);
+std::pair<std::string*, std::pair<int32_t, int32_t>> Dynamic::Run(const std::vector<Static*>& static_objects, const std::pair<std::string*, std::pair<int32_t, int32_t>>& mouse, const std::vector<Dynamic*>& dynamic_objects){
+    std::pair<std::string*, std::pair<int32_t, int32_t>> mouse_mov = this->mouse_movement(static_objects, dynamic_objects);
     this->physics(static_objects, dynamic_objects);
     this->Display();
+
+    return mouse_mov;
+}
+
+void Dynamic::Movement(){
+    std::pair<bool, bool> avail_x = this->get_available_direction();
+
+    if(IsKeyDown(KEY_D) && avail_x.second == true){
+        this->set_movement_direction("RIGHT");
+        this->set_x(this->get_x() + 2.0f);
+    }else if(IsKeyDown(KEY_A) && avail_x.first == true){
+        this->set_movement_direction("LEFT");
+        this->set_x(this->get_x() - 2.0f);
+    }
+
+    if(IsKeyPressed(KEY_SPACE) && this->get_movement_action() != "JUMP" && this->get_jump_amount() > 0){
+        this->set_start_jump(System::current_time());
+        Audio::play("jump");
+        this->set_movement_action("JUMP");
+
+        this->set_jump_amount(this->get_jump_amount() - 1);
+    }
+
+    if(this->get_movement_action() == "JUMP"){
+        auto current_time = System::current_time();
+        std::chrono::duration<float> differ = current_time - this->get_start_jump();
+
+        if(differ.count() >= 0.3f){
+            this->set_movement_action("STAY");
+        }else if(differ.count() < 0.3f){
+            this->set_y(this->get_y() - 7.0f);
+        }
+    }
+}
+
+std::pair<std::string*, std::pair<int32_t, int32_t>> Dynamic::mouse_movement(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
+    int32_t max_x = 500;
+    int32_t max_y = 410;
+    Vector2 mouse_pos = GetMousePosition();
+
+    std::string* action = nullptr;
+    std::pair<int32_t, int32_t> pos = std::make_pair((int32_t)mouse_pos.x, (int32_t)mouse_pos.y);
+
+    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
+        action = new std::string("CLICK_LEFT");
+
+        pos.first -= 420;
+        pos.second -= 300;
+
+        if(mouse_pos.x >= max_x - 200 && mouse_pos.x <= max_x && mouse_pos.y >= max_y - 200 && mouse_pos.y <= max_y){
+            int32_t calc_x = (int32_t)pos.first % 30;
+            int32_t calc_y = (int32_t)pos.second % 30;
+
+            while(pos.first % 30 != 0){
+                calc_x <= 15 ? pos.first-- : pos.first++;
+            }
+
+            while(pos.second % 30 != 0){
+                calc_y <= 15 ? pos.second-- : pos.second++;
+            }
+
+            int32_t p_dpx = this->get_x();
+            int32_t p_dpy = this->get_y();
+
+            while(p_dpx % 30 != 0){
+                p_dpx % 30 <= 15 ? p_dpx-- : p_dpx++;
+            }
+
+            while(p_dpy % 30 != 0){
+                p_dpy % 30 <= 15 ? p_dpy-- : p_dpy++;
+            }
+
+            pos.first += p_dpx;
+            pos.second += p_dpy;
+            
+        }
+    }
+
+    return std::make_pair(action, pos);
 }
 
 void Dynamic::physics(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
@@ -198,7 +285,6 @@ void Dynamic::box_collide_checker(const std::vector<Static*>& static_objects, co
             }
         }
 
-        // STUCK HELPER SESSION XD
         if(d.is_found_bottom == false){
             this->set_y(this->get_y() + 3.0f);
         }else if(d.is_found_bottom == true){
@@ -209,7 +295,6 @@ void Dynamic::box_collide_checker(const std::vector<Static*>& static_objects, co
                     ctb--;
                 }
 
-                // getting over so we could determine as die
                 if(this->get_y() >= calc_bound + ctb){
                     delete this;
                 }
@@ -309,48 +394,4 @@ void Dynamic::Display(){
 
     DrawTexturePro(this->l_foot, source, dest, origin, 0.0f, WHITE);
     DrawTexturePro(this->l_leg, source, dest, origin, 0.0f, WHITE);
-}
-
-void Dynamic::Movement(){
-    std::pair<bool, bool> avail_x = this->get_available_direction();
-
-    if(IsKeyDown(KEY_D) && avail_x.second == true){
-        this->set_movement_direction("RIGHT");
-        this->set_x(this->get_x() + 2.0f);
-    }else if(IsKeyDown(KEY_A) && avail_x.first == true){
-        this->set_movement_direction("LEFT");
-        this->set_x(this->get_x() - 2.0f);
-    }
-
-    if(IsKeyPressed(KEY_SPACE) && this->get_movement_action() != "JUMP" && this->get_jump_amount() > 0){
-        this->set_start_jump(System::current_time());
-        Audio::play("jump");
-        this->set_movement_action("JUMP");
-
-        this->set_jump_amount(this->get_jump_amount() - 1);
-    }
-
-    if(this->get_movement_action() == "JUMP"){
-        auto current_time = System::current_time();
-        std::chrono::duration<float> differ = current_time - this->get_start_jump();
-
-        if(differ.count() >= 0.3f){
-            this->set_movement_action("STAY");
-        }else if(differ.count() < 0.3f){
-            this->set_y(this->get_y() - 7.0f);
-        }
-    }
-}
-
-void Dynamic::mouse_movement(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
-    int32_t max_x = 500;
-    int32_t max_y = 410;
-    Vector2 mouse_pos = GetMousePosition();
-
-    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-        // boutta implement hit / wrenched object
-        if(mouse_pos.x >= max_x - 200 && mouse_pos.x <= max_x && mouse_pos.y >= max_y - 200 && mouse_pos.y <= max_y){
-
-        }
-    }
 }

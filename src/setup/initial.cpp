@@ -38,12 +38,16 @@ void Initial::InitImage(){
 
 void Initial::InitAudio(){
     Sound fx_die = LoadSound("./assets/audio/die.mp3");
-
     this->audio.push_back(std::make_pair("die", fx_die));
 
     Sound fx_jump = LoadSound("./assets/audio/jump.mp3");
-
     this->audio.push_back(std::make_pair("jump", fx_jump));
+
+    Sound fx_break = LoadSound("./assets/audio/break.mp3");
+    this->audio.push_back(std::make_pair("break", fx_break));
+
+    Sound fx_punch = LoadSound("./assets/audio/punch.mp3");
+    this->audio.push_back(std::make_pair("punch", fx_punch));
 }
 
 void Initial::InitGlobal(){

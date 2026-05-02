@@ -16,12 +16,15 @@ class Dynamic: public Body {
 
     public:    
         void Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture) override;
-        void Run(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
+        
+        // so run we defined as returning the mouse action and position
+        std::pair<std::string*, std::pair<int32_t, int32_t>> Run(const std::vector<Static*>& static_objects, const std::pair<std::string*, std::pair<int32_t, int32_t>>& mouse, const std::vector<Dynamic*>& dynamic_objects);
+        
         void Display() override;
         void Delete() override;
 
         void Movement(); 
-        void mouse_movement(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
+        std::pair<std::string*, std::pair<int32_t, int32_t>> mouse_movement(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
 
         int32_t get_layer() override;
         void set_layer(int32_t layer) override;
@@ -65,6 +68,9 @@ class Dynamic: public Body {
         std::string get_movement_direction();
         void set_movement_direction(std::string movement_direction);
 
+        std::string* get_mouse_action();
+        void set_mouse_action(std::string* mouse_action);
+
         std::chrono::time_point<std::chrono::high_resolution_clock> get_start_jump();
         void set_start_jump(std::chrono::time_point<std::chrono::high_resolution_clock> start_jump);
 
@@ -88,6 +94,7 @@ class Dynamic: public Body {
         std::chrono::time_point<std::chrono::high_resolution_clock> start_jump;
         std::string movement_action;
         std::string movement_direction;
+        std::string* mouse_action;
 
         bool anchor;
         

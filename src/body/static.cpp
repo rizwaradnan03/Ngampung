@@ -2,17 +2,18 @@
 #include <raylib.h>
 #include <initial.h>
 #include <iostream>
+#include <namespace/audio.h>
 
 void Static::Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture){
-    this->x = x;
-    this->y = y;
-    this->w = w;
-    this->h = h;
+    this->set_x(x);
+    this->set_y(y);
+    this->set_w(w);
+    this->set_h(h);
     this->anchor = anchor;
-    this->is_can_collide = is_can_collide;
-    this->collide_masks = collide_masks;
-    this->layer = layer;
-    this->health = health;
+    this->set_is_can_collide(is_can_collide);
+    this->set_collide_masks(collide_masks);
+    this->set_layer(layer);
+    this->set_health(health);
 
     auto tex = G_initial->find_block_by_name(texture);
     if(tex == nullptr) {
@@ -30,7 +31,13 @@ bool Static::get_is_free(){
 void Static::set_is_free(bool is_free){
     this->is_free = is_free;
 }
+std::chrono::time_point<std::chrono::high_resolution_clock>* Static::get_max_time_before_break(){
+    return this->max_time_before_break;
+}
 
+void Static::set_max_time_before_break(std::chrono::time_point<std::chrono::high_resolution_clock>* max_time_before_break){
+    this->max_time_before_break = max_time_before_break;
+}
 
 int32_t Static::get_x(){
     return this->x;
@@ -64,6 +71,14 @@ void Static::set_h(int32_t h){
     this->h = h;
 }
 
+int32_t Static::get_health(){
+    return this->health;
+}
+
+void Static::set_health(int32_t health){
+    this->health = health;
+}
+
 int32_t Static::get_layer(){
     return this->layer;
 }
@@ -89,16 +104,17 @@ void Static::set_collide_masks(std::vector<int32_t>* collide_masks){
     this->collide_masks = collide_masks;
 }
 
-void Static::Run(std::string *action, const std::vector<Static*>& static_objects){
+void Static::Run(std::string *action, const std::pair<std::string*, std::pair<int32_t, int32_t>>& mouse, const std::vector<Static*>& static_objects){
     this->physics(static_objects);
     this->action_check(action);
     this->Display();
 
     // delete checker
+    this->mouse_checker(mouse);
+    this->reset_max_time_checker();
     this->Delete();
 }
 
-// we do need to implement stuff here
 void Static::physics(const std::vector<Static*>& static_objects){
 
 }
@@ -126,6 +142,27 @@ void Static::affect_by_action(std::string action){
 void Static::action_check(std::string* action){
     if(action != nullptr){
         this->affect_by_action(*action);
+    }
+}
+
+void Static::reset_max_time_checker(){
+    auto current_time = std::chrono::high_resolution_clock::now();
+    if(this->get_max_time_before_break() == nullptr){
+        return;
+    }
+
+    if(current_time >= *this->get_max_time_before_break()){
+        this->set_health(1);
+        this->set_max_time_before_break(nullptr);
+    }
+}
+
+void Static::mouse_checker(const std::pair<std::string*, std::pair<int32_t, int32_t>>& mouse){
+    if(mouse.second.first == this->get_x() && mouse.second.second == this->get_y()){
+        if(*mouse.first == "CLICK_LEFT"){
+            Audio::play("punch");
+            this->set_health(this->get_health() - 1);
+        }        
     }
 }
 

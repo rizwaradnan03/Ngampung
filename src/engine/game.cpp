@@ -60,7 +60,6 @@ void Game::Start(){
     auto start_time = std::chrono::high_resolution_clock::now();
     this->set_run_time(start_time);
 
-    // init camera
     Camera2D cam = {0};
     cam.target = {(float)this->player->get_x(), (float)this->player->get_y()};
     cam.offset = {GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f};
@@ -72,7 +71,6 @@ void Game::Start(){
     while (!WindowShouldClose()){
         this->background_action();
 
-        // checking
         bool is_free = player->get_is_free();
         if(is_free == true){
             delete player;
@@ -86,9 +84,10 @@ void Game::Start(){
         ClearBackground(BLUE);
         BeginMode2D(this->camera);
 
-        this->Habit(nullptr);
+        std::pair<std::string*, std::pair<int32_t, int32_t>>p_run = player->Run(this->to_render_static, this->get_mouse(), this->to_render_dynamic);
+        this->set_mouse(p_run);
 
-        player->Run(this->to_render_static, this->to_render_dynamic);
+        this->Habit(nullptr);
 
         EndMode2D();
         EndDrawing();
@@ -134,7 +133,7 @@ void Game::Habit(std::string* action){
             delete this->to_render_static[i];
             this->to_render_static.erase(this->to_render_static.begin() + i);
         }else{
-            this->to_render_static[i]->Run(action, to_render_static);
+            this->to_render_static[i]->Run(action, this->get_mouse(), to_render_static);
         }
 
     }
@@ -163,4 +162,12 @@ void Game::fps_counter(){
 
 void Game::camera_alligner(){
     this->camera.target = {(float)this->player->get_x(), (float)this->player->get_y()};
+}
+
+std::pair<std::string*, std::pair<int32_t, int32_t>> Game::get_mouse(){
+    return this->mouse;
+}
+
+void Game::set_mouse(std::pair<std::string*, std::pair<int32_t, int32_t>> mouse){
+    this->mouse = mouse;
 }
