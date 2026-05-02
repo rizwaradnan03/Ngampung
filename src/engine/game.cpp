@@ -36,8 +36,11 @@ std::vector<Static*> RunStarter(){
 }
 
 void Game::Start(){
-    constexpr int screenWidth = 800;
-    constexpr int screenHeight = 600;
+    const int screenWidth = 800;
+    const int screenHeight = 600;
+    // const int screenWidth = GetMonitorWidth(0);
+    // const int screenHeight = GetMonitorHeight(0);
+    // SetConfigFlags(FLAG_FULLSCREEN_MODE);
 
     InitWindow(screenWidth, screenHeight, "Ngampung");
     InitAudioDevice();
@@ -132,6 +135,7 @@ void Game::Habit(std::string* action){
         if(is_free == true){
             delete this->to_render_static[i];
             this->to_render_static.erase(this->to_render_static.begin() + i);
+            i--;
         }else{
             this->to_render_static[i]->Run(action, this->get_mouse(), to_render_static);
         }

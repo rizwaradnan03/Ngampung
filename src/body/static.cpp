@@ -3,6 +3,7 @@
 #include <initial.h>
 #include <iostream>
 #include <namespace/audio.h>
+#include <namespace/system.h>
 
 void Static::Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture){
     this->set_x(x);
@@ -146,13 +147,13 @@ void Static::action_check(std::string* action){
 }
 
 void Static::reset_max_time_checker(){
-    auto current_time = std::chrono::high_resolution_clock::now();
+    std::chrono::time_point<std::chrono::high_resolution_clock> current_time = System::current_time();
     if(this->get_max_time_before_break() == nullptr){
         return;
     }
 
     if(current_time >= *this->get_max_time_before_break()){
-        this->set_health(1);
+        this->set_health(3);
         this->set_max_time_before_break(nullptr);
     }
 }
@@ -160,8 +161,11 @@ void Static::reset_max_time_checker(){
 void Static::mouse_checker(const std::pair<std::string*, std::pair<int32_t, int32_t>>& mouse){
     if(mouse.second.first == this->get_x() && mouse.second.second == this->get_y()){
         if(*mouse.first == "CLICK_LEFT"){
-            Audio::play("punch");
+            std::chrono::time_point<std::chrono::high_resolution_clock> t = System::current_time() + std::chrono::seconds(2);
+            
             this->set_health(this->get_health() - 1);
+            this->set_max_time_before_break(new std::chrono::time_point<std::chrono::high_resolution_clock>(t));
+            Audio::play("punch");
         }        
     }
 }
