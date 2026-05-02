@@ -160,7 +160,7 @@ void Dynamic::set_start_jump(std::chrono::time_point<std::chrono::high_resolutio
     this->start_jump = start_jump;
 }
 
-std::pair<std::string*, std::pair<int32_t, int32_t>> Dynamic::Run(const std::vector<Static*>& static_objects, const std::pair<std::string*, std::pair<int32_t, int32_t>>& mouse, const std::vector<Dynamic*>& dynamic_objects){
+std::pair<std::string*, std::pair<int32_t, int32_t>> Dynamic::Run(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
     std::pair<std::string*, std::pair<int32_t, int32_t>> mouse_mov = this->mouse_movement(static_objects, dynamic_objects);
     this->physics(static_objects, dynamic_objects);
     this->Display();

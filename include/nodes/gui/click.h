@@ -1,8 +1,10 @@
-#include <engine/render.h>
+#include <engine/gui.h>
+#include <cstdint>
+#include <engine/gui.h>
 
 #pragma once
 
-class Gui: public Render {
+class GUI_Click: public Gui {
     public:
         void Display() override;
         void Init(int32_t x, int32_t y, int32_t w, int32_t h, Color color);
@@ -23,6 +25,8 @@ class Gui: public Render {
 
         virtual Color get_color();
         virtual void set_color(Color color);
+
+        void click();
 
     private:
         int32_t x;

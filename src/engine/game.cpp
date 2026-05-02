@@ -5,6 +5,7 @@
 #include <iostream>
 #include <initial.h>
 #include <cstdint>
+#include <singleton/mouse.h>
 
 std::vector<Static*> RunStarter(){
     std::vector<Static*> tmp;
@@ -87,8 +88,8 @@ void Game::Start(){
         ClearBackground(BLUE);
         BeginMode2D(this->camera);
 
-        std::pair<std::string*, std::pair<int32_t, int32_t>>p_run = player->Run(this->to_render_static, this->get_mouse(), this->to_render_dynamic);
-        this->set_mouse(p_run);
+        std::pair<std::string*, std::pair<int32_t, int32_t>>p_run = player->Run(this->to_render_static, this->to_render_dynamic);
+        G_SINGLETON_Mouse->set_mouse(p_run);
 
         this->Habit(nullptr);
 
@@ -101,6 +102,7 @@ void Game::Start(){
 
 void Game::init_global(){
     G_initial = new Initial();
+    G_SINGLETON_Mouse = new SINGLETON_Mouse();
 }
 
 int32_t Game::get_frame_count(){
@@ -137,7 +139,7 @@ void Game::Habit(std::string* action){
             this->to_render_static.erase(this->to_render_static.begin() + i);
             i--;
         }else{
-            this->to_render_static[i]->Run(action, this->get_mouse(), to_render_static);
+            this->to_render_static[i]->Run(action, to_render_static);
         }
 
     }
@@ -166,12 +168,4 @@ void Game::fps_counter(){
 
 void Game::camera_alligner(){
     this->camera.target = {(float)this->player->get_x(), (float)this->player->get_y()};
-}
-
-std::pair<std::string*, std::pair<int32_t, int32_t>> Game::get_mouse(){
-    return this->mouse;
-}
-
-void Game::set_mouse(std::pair<std::string*, std::pair<int32_t, int32_t>> mouse){
-    this->mouse = mouse;
 }

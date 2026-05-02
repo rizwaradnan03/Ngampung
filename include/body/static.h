@@ -16,9 +16,9 @@ class Static: public Body {
         void Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture) override;
         void Display() override;
         void Delete() override;
-        void Run(std::string* action, const std::pair<std::string*, std::pair<int32_t, int32_t>>& mouse, const std::vector<Static*>& static_objects);
+        void Run(std::string* action, const std::vector<Static*>& static_objects);
         
-        void mouse_checker(const std::pair<std::string*, std::pair<int32_t, int32_t>>& mouse);
+        void mouse_checker();
 
         void action_check(std::string* action);
         void affect_by_action(std::string action);

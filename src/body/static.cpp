@@ -4,6 +4,7 @@
 #include <iostream>
 #include <namespace/audio.h>
 #include <namespace/system.h>
+#include <singleton/mouse.h>
 
 void Static::Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture){
     this->set_x(x);
@@ -105,13 +106,13 @@ void Static::set_collide_masks(std::vector<int32_t>* collide_masks){
     this->collide_masks = collide_masks;
 }
 
-void Static::Run(std::string *action, const std::pair<std::string*, std::pair<int32_t, int32_t>>& mouse, const std::vector<Static*>& static_objects){
+void Static::Run(std::string *action, const std::vector<Static*>& static_objects){
     this->physics(static_objects);
     this->action_check(action);
     this->Display();
 
     // delete checker
-    this->mouse_checker(mouse);
+    this->mouse_checker();
     this->reset_max_time_checker();
     this->Delete();
 }
@@ -158,14 +159,19 @@ void Static::reset_max_time_checker(){
     }
 }
 
-void Static::mouse_checker(const std::pair<std::string*, std::pair<int32_t, int32_t>>& mouse){
-    if(mouse.second.first == this->get_x() && mouse.second.second == this->get_y()){
-        if(*mouse.first == "CLICK_LEFT"){
+void Static::mouse_checker(){
+    if(G_SINGLETON_Mouse->get_mouse().second.first == this->get_x() && G_SINGLETON_Mouse->get_mouse().second.second == this->get_y()){
+        if(*G_SINGLETON_Mouse->get_mouse().first == "CLICK_LEFT"){
             std::chrono::time_point<std::chrono::high_resolution_clock> t = System::current_time() + std::chrono::seconds(2);
             
             this->set_health(this->get_health() - 1);
             this->set_max_time_before_break(new std::chrono::time_point<std::chrono::high_resolution_clock>(t));
-            Audio::play("punch");
+            
+            if(this->get_health() > 0){
+                Audio::play("punch");
+            }else{
+                Audio::play("break");
+            }
         }        
     }
 }
