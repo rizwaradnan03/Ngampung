@@ -1,9 +1,14 @@
 #include <string>
 #include <chrono>
+#include <chrono>
 
 #pragma once
 
 namespace System {
     void Log(bool type, const std::string& custom_message);
     std::chrono::time_point<std::chrono::high_resolution_clock> current_time();
+
+    void fps_counter();
+    int32_t frame_count;
+    std::chrono::time_point<std::chrono::high_resolution_clock> run_time;
 }

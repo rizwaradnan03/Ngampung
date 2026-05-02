@@ -1,5 +1,6 @@
 #include <namespace/system.h>
 #include <iostream>
+#include <raylib.h>
 
 namespace System {
     void Log(bool type, const std::string& custom_message = ""){
@@ -22,4 +23,21 @@ namespace System {
         auto time = std::chrono::high_resolution_clock::now();
         return time;
     }
+
+    void fps_counter(){
+        auto current_time = std::chrono::high_resolution_clock::now();
+        frame_count++;
+
+        std::chrono::duration<float> differ = current_time - run_time;
+        std::string strf = "Frame : " + std::to_string(frame_count);
+
+        if(differ.count() >= 1.0f){
+            float fps = static_cast<float>(frame_count) / differ.count();
+            frame_count = 0;
+            run_time = current_time;
+        }
+
+        DrawText(strf.c_str(), 0, 0, 20, RED);
+    }
 }
+

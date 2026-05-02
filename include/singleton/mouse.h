@@ -13,4 +13,4 @@ class SINGLETON_Mouse {
         std::pair<std::string*, std::pair<int32_t, int32_t>> mouse;  
 };
 
-extern SINGLETON_Mouse* G_SINGLETON_Mouse;
+extern SINGLETON_Mouse* G_SINGLETON_mouse;

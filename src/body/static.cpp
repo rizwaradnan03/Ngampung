@@ -160,8 +160,8 @@ void Static::reset_max_time_checker(){
 }
 
 void Static::mouse_checker(){
-    if(G_SINGLETON_Mouse->get_mouse().second.first == this->get_x() && G_SINGLETON_Mouse->get_mouse().second.second == this->get_y()){
-        if(*G_SINGLETON_Mouse->get_mouse().first == "CLICK_LEFT"){
+    if(G_SINGLETON_mouse->get_mouse().second.first == this->get_x() && G_SINGLETON_mouse->get_mouse().second.second == this->get_y()){
+        if(*G_SINGLETON_mouse->get_mouse().first == "CLICK_LEFT"){
             std::chrono::time_point<std::chrono::high_resolution_clock> t = System::current_time() + std::chrono::seconds(2);
             
             this->set_health(this->get_health() - 1);

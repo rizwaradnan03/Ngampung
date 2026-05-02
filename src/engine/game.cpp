@@ -1,40 +1,40 @@
-#include <engine/game.h>
 #include <raylib.h>
-#include <body/static.h>
-#include <body/dynamic.h>
+#include <engine/game.h>
 #include <iostream>
 #include <initial.h>
-#include <cstdint>
+#include <namespace/system.h>
 #include <singleton/mouse.h>
+#include <engine/render_type/world.h>
+#include <engine/render_type/gui.h>
 
-std::vector<Static*> RunStarter(){
-    std::vector<Static*> tmp;
-    int32_t h = 3;
+// std::vector<Static*> RunStarter(){
+//     std::vector<Static*> tmp;
+//     int32_t h = 3;
 
-    std::vector<int32_t> masks = {1, 2, 3};
+//     std::vector<int32_t> masks = {1, 2, 3};
 
-    Static* blck = new Static();
-    blck->Init(60, 240, 30, 30, h, true, true, 1, &masks, "BLOCK_dirt");
+//     Static* blck = new Static();
+//     blck->Init(60, 240, 30, 30, h, true, true, 1, &masks, "BLOCK_dirt");
 
-    tmp.push_back(blck);
+//     tmp.push_back(blck);
 
-    int cur_x = 0;
-    int cur_y = 300;
-    while(cur_y < 600){
-        while(cur_x <= 780){
-            Static* block = new Static();
-            block->Init(cur_x, cur_y, 30, 30, h, true, true, 1, &masks, "BLOCK_dirt");
+//     int cur_x = 0;
+//     int cur_y = 300;
+//     while(cur_y < 600){
+//         while(cur_x <= 780){
+//             Static* block = new Static();
+//             block->Init(cur_x, cur_y, 30, 30, h, true, true, 1, &masks, "BLOCK_dirt");
 
-            tmp.push_back(block);
-            cur_x += 30;
-        }
+//             tmp.push_back(block);
+//             cur_x += 30;
+//         }
 
-        cur_y += 30;
-        cur_x = 0;
-    }
+//         cur_y += 30;
+//         cur_x = 0;
+//     }
 
-    return tmp;
-}
+//     return tmp;
+// }
 
 void Game::Start(){
     const int screenWidth = 800;
@@ -49,52 +49,14 @@ void Game::Start(){
 
     this->init_global();
 
-    std::vector<Static*> value = RunStarter();
-
-    this->to_render_static = value;
-
-    Dynamic* player = new Dynamic();
-
-    std::vector<int32_t> masks = {1, 2, 3};
-
-    player->Init(30, 0, 30, 30, 100, false, true, 1, &masks, "BLOCK_player");
-
-    this->player = player;
-
-    auto start_time = std::chrono::high_resolution_clock::now();
-    this->set_run_time(start_time);
-
-    Camera2D cam = {0};
-    cam.target = {(float)this->player->get_x(), (float)this->player->get_y()};
-    cam.offset = {GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f};
-    cam.rotation = 0.0f;
-    cam.zoom = 1.0f;
-
-    this->camera = cam;
-
     while (!WindowShouldClose()){
-        this->background_action();
+        System::fps_counter();
 
-        bool is_free = player->get_is_free();
-        if(is_free == true){
-            delete player;
-            player = nullptr;
+        if(this->get_render_type() == "GUI"){
+            G_RENDER_TYPE_gui->Run();
+        }else if(this->get_render_type() == "WORLD"){
+            G_RENDER_TYPE_world->Run();
         }
-
-        player->box_collide_checker(this->to_render_static, this->to_render_dynamic);
-        player->Movement();
-
-        BeginDrawing();
-        ClearBackground(BLUE);
-        BeginMode2D(this->camera);
-
-        std::pair<std::string*, std::pair<int32_t, int32_t>>p_run = player->Run(this->to_render_static, this->to_render_dynamic);
-        G_SINGLETON_Mouse->set_mouse(p_run);
-
-        this->Habit(nullptr);
-
-        EndMode2D();
-        EndDrawing();
     }
     
     CloseWindow();
@@ -102,70 +64,15 @@ void Game::Start(){
 
 void Game::init_global(){
     G_initial = new Initial();
-    G_SINGLETON_Mouse = new SINGLETON_Mouse();
+    G_SINGLETON_mouse = new SINGLETON_Mouse();
+    G_RENDER_TYPE_world = new Render_Type_World();
+    G_RENDER_TYPE_gui = new Render_Type_Gui();
 }
 
-int32_t Game::get_frame_count(){
-    return this->frame_count;
+std::string Game::get_render_type(){
+    return this->render_type;
 }
 
-void Game::set_frame_count(int32_t value){
-    this->frame_count = value;
-}
-
-Dynamic* Game::get_player(){
-    return this->player;
-}
-
-void Game::set_player(Dynamic* player){
-    this->player = player;
-}
-
-std::chrono::time_point<std::chrono::high_resolution_clock> Game::get_run_time(){
-    return this->run_time;
-}
-
-void Game::set_run_time(std::chrono::time_point<std::chrono::high_resolution_clock> value){
-    this->run_time = value;
-}
-
-void Game::Habit(std::string* action){
-    for(int i = 0;i < this->to_render_static.size();i++){
-        Static* obj = this->to_render_static[i];
-
-        bool is_free = this->to_render_static[i]->get_is_free();
-        if(is_free == true){
-            delete this->to_render_static[i];
-            this->to_render_static.erase(this->to_render_static.begin() + i);
-            i--;
-        }else{
-            this->to_render_static[i]->Run(action, to_render_static);
-        }
-
-    }
-}
-
-void Game::background_action(){
-    this->fps_counter();
-    this->camera_alligner();
-}
-
-void Game::fps_counter(){
-    auto current_time = std::chrono::high_resolution_clock::now();
-    this->set_frame_count(this->get_frame_count() + 1);
-
-    std::chrono::duration<float> differ = current_time - this->get_run_time();
-    std::string strf = "Frame : " + std::to_string(this->frame_count);
-
-    if(differ.count() >= 1.0f){
-        float fps = static_cast<float>(this->frame_count) / differ.count();
-        this->set_frame_count(0);
-        this->set_run_time(current_time);
-    }
-
-    DrawText(strf.c_str(), 0, 0, 20, RED);
-}
-
-void Game::camera_alligner(){
-    this->camera.target = {(float)this->player->get_x(), (float)this->player->get_y()};
+void Game::set_render_type(std::string render_type){
+    this->render_type = render_type;
 }
