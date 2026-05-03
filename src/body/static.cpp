@@ -149,7 +149,7 @@ void Static::action_check(std::string* action){
 }
 
 void Static::reset_max_time_checker(){
-    std::chrono::time_point<std::chrono::high_resolution_clock> current_time = System::current_time();
+    std::chrono::time_point<std::chrono::high_resolution_clock> current_time = sys::current_time();
     if(this->get_max_time_before_break() == nullptr){
         return;
     }
@@ -163,7 +163,7 @@ void Static::reset_max_time_checker(){
 void Static::mouse_checker(){
     if(G_SINGLETON_mouse->get_mouse().second.first == this->get_x() && G_SINGLETON_mouse->get_mouse().second.second == this->get_y()){
         if(*G_SINGLETON_mouse->get_mouse().first == "CLICK_LEFT"){
-            std::chrono::time_point<std::chrono::high_resolution_clock> t = System::current_time() + std::chrono::seconds(2);
+            std::chrono::time_point<std::chrono::high_resolution_clock> t = sys::current_time() + std::chrono::seconds(2);
             
             this->set_health(this->get_health() - 1);
             this->set_max_time_before_break(new std::chrono::time_point<std::chrono::high_resolution_clock>(t));

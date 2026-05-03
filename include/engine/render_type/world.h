@@ -9,10 +9,12 @@
 
 class Render_Type_World {
     public:
-        void Set(Dynamic* player, const std::pair<std::vector<Static*>*, std::vector<Dynamic*>*>& set);
+        void Set(std::string type);
         void Run();
         void Habit(std::string* action);
         void camera_alligner();
+
+        void R_main();
 
     private:
         std::vector<Static*> to_render_static;

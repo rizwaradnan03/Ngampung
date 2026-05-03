@@ -4,7 +4,7 @@
 
 #pragma once
 
-namespace System {
+namespace sys {
     void Log(bool type, const std::string& custom_message);
     std::chrono::time_point<std::chrono::high_resolution_clock> current_time();
 

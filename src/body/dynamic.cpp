@@ -22,7 +22,7 @@ void Dynamic::Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, b
 
     auto tex = G_initial->find_block_by_name(texture);
     if(tex == nullptr){
-        System::Log(false, "Gagal Load Texture!");
+        sys::Log(false, "Gagal Load Texture!");
         return;
     }
 
@@ -180,7 +180,7 @@ void Dynamic::Movement(){
     }
 
     if(IsKeyPressed(KEY_SPACE) && this->get_movement_action() != "JUMP" && this->get_jump_amount() > 0){
-        this->set_start_jump(System::current_time());
+        this->set_start_jump(sys::current_time());
         Audio::play("jump");
         this->set_movement_action("JUMP");
 
@@ -188,7 +188,7 @@ void Dynamic::Movement(){
     }
 
     if(this->get_movement_action() == "JUMP"){
-        auto current_time = System::current_time();
+        auto current_time = sys::current_time();
         std::chrono::duration<float> differ = current_time - this->get_start_jump();
 
         if(differ.count() >= 0.3f){

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <raylib.h>
 
-namespace System {
+namespace sys {
     void Log(bool type, const std::string& custom_message = ""){
         std::string message;
     
@@ -41,6 +41,4 @@ namespace System {
 
         DrawText(strf.c_str(), 0, 0, 20, RED);
     }
-
-
 }
