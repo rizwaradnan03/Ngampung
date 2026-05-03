@@ -49,6 +49,8 @@ void Game::Start(){
 
     this->init_global();
 
+    this->set_render_type("WORLD");
+
     while (!WindowShouldClose()){
         System::fps_counter();
 

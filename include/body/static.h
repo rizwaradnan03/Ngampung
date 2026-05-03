@@ -1,12 +1,14 @@
-#include <raylib.h>
 #include <string>
 #include <body/body.h>
+#include <raylib.h>
 #include <cstdint>
 #include <vector>
 #include <chrono>
 #include <utility>
 
 #pragma once
+
+class Dynamic;
 
 class Static: public Body {
     using Body::Init;
@@ -16,7 +18,7 @@ class Static: public Body {
         void Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture) override;
         void Display() override;
         void Delete() override;
-        void Run(std::string* action, const std::vector<Static*>& static_objects);
+        void Run(std::string* action, const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
         
         void mouse_checker();
 

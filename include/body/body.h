@@ -1,13 +1,18 @@
 #include <engine/render.h>
+#include <vector>
+#include <string>
 
 #pragma once
+
+class Static;
+class Dynamic;
 
 class Body: public Render {
     public:
         virtual void Display();
         virtual void Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture);
         virtual void Delete();
-        virtual void Run();
+        virtual void Run(std::string* action, const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
         
         virtual int32_t get_layer();
         virtual void set_layer(int32_t layer);

@@ -24,6 +24,8 @@ namespace System {
         return time;
     }
 
+    int32_t frame_count = 0;
+    std::chrono::time_point<std::chrono::high_resolution_clock> run_time;
     void fps_counter(){
         auto current_time = std::chrono::high_resolution_clock::now();
         frame_count++;
@@ -39,5 +41,6 @@ namespace System {
 
         DrawText(strf.c_str(), 0, 0, 20, RED);
     }
-}
 
+
+}

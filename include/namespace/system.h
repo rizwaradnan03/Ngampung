@@ -9,6 +9,6 @@ namespace System {
     std::chrono::time_point<std::chrono::high_resolution_clock> current_time();
 
     void fps_counter();
-    int32_t frame_count;
-    std::chrono::time_point<std::chrono::high_resolution_clock> run_time;
+    extern int32_t frame_count;
+    extern std::chrono::time_point<std::chrono::high_resolution_clock> run_time;
 }

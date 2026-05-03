@@ -12,7 +12,8 @@ class Render_Type_World {
         void Set(Dynamic* player, const std::pair<std::vector<Static*>*, std::vector<Dynamic*>*>& set);
         void Run();
         void Habit(std::string* action);
-        
+        void camera_alligner();
+
     private:
         std::vector<Static*> to_render_static;
         std::vector<Dynamic*> to_render_dynamic;

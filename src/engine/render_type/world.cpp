@@ -1,5 +1,6 @@
 #include <engine/render_type/world.h>
 #include <singleton/mouse.h>
+#include <body/body.h>
 
 Render_Type_World* G_RENDER_TYPE_world = nullptr;
 
@@ -19,6 +20,8 @@ void Render_Type_World::Set(Dynamic* player, const std::pair<std::vector<Static*
 }
 
 void Render_Type_World::Run(){
+    this->camera_alligner();
+
     bool is_free = this->player->get_is_free();
     if(is_free == true){
         delete player;
@@ -32,29 +35,44 @@ void Render_Type_World::Run(){
     ClearBackground(BLUE);
     BeginMode2D(this->camera);
 
-    std::pair<std::string*, std::pair<int32_t, int32_t>>p_run = player->Run(this->to_render_static, this->to_render_dynamic);
-    G_SINGLETON_mouse->set_mouse(p_run);
+    player->Run(nullptr, this->to_render_static, this->to_render_dynamic);
 
     this->Habit(nullptr);
 }
 
 void Render_Type_World::Habit(std::string* action){
-    for(int i = 0;i < this->to_render_static.size();i++){
-        Static* obj = this->to_render_static[i];
+    int32_t sz = this->to_render_static.size();
+    int32_t dz = this->to_render_dynamic.size();
 
-        bool is_free = this->to_render_static[i]->get_is_free();
+    for(int i = 0;i < sz + dz;i++){
+        Body* obj;
+
+        if(i < sz){
+            obj = this->to_render_static[i];
+        }else{
+            obj = this->to_render_dynamic[i - sz];
+        }
+
+        bool is_free = obj->get_is_free();
         if(is_free == true){
-            delete this->to_render_static[i];
-            this->to_render_static.erase(this->to_render_static.begin() + i);
+            delete obj;
+            if(i < sz){
+                this->to_render_static.erase(this->to_render_static.begin() + i);
+            }else{
+              this->to_render_dynamic.erase(this->to_render_dynamic.begin() + (i - sz));
+            }
+
+            // i < sz ? this->to_render_static.erase(this->to_render_static.begin() + i) : this->to_render_dynamic.erase(this->to_render_dynamic.begin() + (i - sz));
+
             i--;
         }else{
-            this->to_render_static[i]->Run(action, to_render_static);
+            obj->Run(action, to_render_static, to_render_dynamic);
         }
 
     }
 }
 
 // camera alligned i need this
-// void Game::camera_alligner(){
-//     this->camera.target = {(float)this->player->get_x(), (float)this->player->get_y()};
-// }
+void Render_Type_World::camera_alligner(){
+    this->camera.target = {(float)this->player->get_x(), (float)this->player->get_y()};
+}

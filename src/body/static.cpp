@@ -5,6 +5,7 @@
 #include <namespace/audio.h>
 #include <namespace/system.h>
 #include <singleton/mouse.h>
+#include <body/dynamic.h>
 
 void Static::Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture){
     this->set_x(x);
@@ -106,7 +107,7 @@ void Static::set_collide_masks(std::vector<int32_t>* collide_masks){
     this->collide_masks = collide_masks;
 }
 
-void Static::Run(std::string *action, const std::vector<Static*>& static_objects){
+void Static::Run(std::string* action, const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
     this->physics(static_objects);
     this->action_check(action);
     this->Display();

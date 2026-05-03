@@ -5,6 +5,8 @@
 #include <namespace/audio.h>
 #include <namespace/physic.h>
 #include <namespace/system.h>
+#include <body/static.h>
+#include <singleton/mouse.h>
 
 void Dynamic::Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture){
     this->set_x(x);
@@ -160,12 +162,10 @@ void Dynamic::set_start_jump(std::chrono::time_point<std::chrono::high_resolutio
     this->start_jump = start_jump;
 }
 
-std::pair<std::string*, std::pair<int32_t, int32_t>> Dynamic::Run(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
-    std::pair<std::string*, std::pair<int32_t, int32_t>> mouse_mov = this->mouse_movement(static_objects, dynamic_objects);
+void Dynamic::Run(std::string* action, const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
+    this->mouse_movement(static_objects, dynamic_objects);
     this->physics(static_objects, dynamic_objects);
     this->Display();
-
-    return mouse_mov;
 }
 
 void Dynamic::Movement(){
@@ -199,7 +199,7 @@ void Dynamic::Movement(){
     }
 }
 
-std::pair<std::string*, std::pair<int32_t, int32_t>> Dynamic::mouse_movement(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
+void Dynamic::mouse_movement(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
     int32_t max_x = 500;
     int32_t max_y = 410;
     Vector2 mouse_pos = GetMousePosition();
@@ -242,7 +242,7 @@ std::pair<std::string*, std::pair<int32_t, int32_t>> Dynamic::mouse_movement(con
         }
     }
 
-    return std::make_pair(action, pos);
+    G_SINGLETON_mouse->set_mouse(std::make_pair(action, pos));
 }
 
 void Dynamic::physics(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
