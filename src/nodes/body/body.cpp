@@ -1,8 +1,8 @@
-#include <body/body.h>
+#include <nodes/body/body.h>
 #include <iostream>
 #include <initial.h>
-#include <body/static.h>
-#include <body/dynamic.h>
+#include <nodes/body/static.h>
+#include <nodes/body/dynamic.h>
 
 void Body::Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture){
     this->x = x;

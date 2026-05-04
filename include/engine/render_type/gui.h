@@ -1,7 +1,7 @@
 #include <raylib.h>
 #include <vector>
-#include <body/static.h>
-#include <body/dynamic.h>
+#include <nodes/body/static.h>
+#include <nodes/body/dynamic.h>
 #include <engine/gui.h>
 
 #pragma once

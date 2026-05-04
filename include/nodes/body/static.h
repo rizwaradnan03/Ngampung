@@ -1,5 +1,5 @@
 #include <string>
-#include <body/body.h>
+#include <nodes/body/body.h>
 #include <raylib.h>
 #include <cstdint>
 #include <vector>

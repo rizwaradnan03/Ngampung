@@ -1,6 +1,6 @@
 #include <engine/render_type/world.h>
 #include <singleton/mouse.h>
-#include <body/body.h>
+#include <nodes/body/body.h>
 #include <iostream>
 
 Render_Type_World* G_RENDER_TYPE_world = nullptr;
@@ -57,7 +57,6 @@ void Render_Type_World::Set(std::string type){
 void Render_Type_World::Run(){
     this->camera_alligner();
     
-    std::cout << "NECESSITY : " << std::endl;
     // bool is_free = this->player->get_is_free();
     // if(is_free == true){
     //     delete player;

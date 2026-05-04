@@ -1,5 +1,5 @@
 #include <engine/render.h>
-#include <body/body.h>
+#include <nodes/body/body.h>
 #include <cstdint>
 #include <raylib.h>
 #include <string>

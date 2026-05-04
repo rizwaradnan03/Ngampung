@@ -1,11 +1,11 @@
-#include <body/dynamic.h>
+#include <nodes/body/dynamic.h>
 #include <initial.h>
 #include <namespace/system.h>
 #include <iostream>
 #include <namespace/audio.h>
 #include <namespace/physic.h>
 #include <namespace/system.h>
-#include <body/static.h>
+#include <nodes/body/static.h>
 #include <singleton/mouse.h>
 
 void Dynamic::Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture){

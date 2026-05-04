@@ -1,7 +1,7 @@
 #include <vector>
 #include <utility>
-#include <body/dynamic.h>
-#include <body/static.h>
+#include <nodes/body/dynamic.h>
+#include <nodes/body/static.h>
 #include <string>
 #include <chrono>
 #include <string.h>
