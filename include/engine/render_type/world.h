@@ -2,6 +2,7 @@
 #include <vector>
 #include <nodes/body/static.h>
 #include <nodes/body/dynamic.h>
+#include <sources/objects/player.h>
 #include <engine/gui.h>
 #include <string>
 
@@ -19,7 +20,7 @@ class Render_Type_World {
     private:
         std::vector<Static*> to_render_static;
         std::vector<Dynamic*> to_render_dynamic;
-        Dynamic* player;
+        Player* player;
         Camera2D camera;
 };
 

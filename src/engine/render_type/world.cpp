@@ -2,6 +2,7 @@
 #include <singleton/mouse.h>
 #include <nodes/body/body.h>
 #include <iostream>
+#include <sources/objects/player.h>
 
 Render_Type_World* G_RENDER_TYPE_world = nullptr;
 
@@ -39,7 +40,7 @@ void Render_Type_World::Set(std::string type){
         R_main();
     }
     
-    Dynamic* player = new Dynamic();
+    Player* player = new Player();
     std::vector<int32_t> masks = {1, 2, 3};
     player->Init(0, 0, 30, 30, 100, false, true, 1, &masks, "BLOCK_player");
     this->player = player;

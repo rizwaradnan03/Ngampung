@@ -1,5 +1,4 @@
-#include <engine/render.h>
-#include <nodes/body/body.h>
+#include <nodes/body/dynamic.h>
 #include <cstdint>
 #include <raylib.h>
 #include <string>
@@ -12,34 +11,34 @@
 
 class Static;
 
-class Dynamic: public Body {
-    using Body::Init;
+class Player: public Dynamic {
+    using Dynamic::Init;
 
     public:    
-        virtual void Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture) override;
+        void Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture) override;
         
         void Run(std::string* action, const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
         
-        void Display() override;
-        void Delete() override;
+        void Display();
+        void Delete();
 
         void Movement(); 
         void mouse_movement(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
 
-        int32_t get_layer() override;
-        void set_layer(int32_t layer) override;
+        int32_t get_layer();
+        void set_layer(int32_t layer);
 
-        int32_t get_x() override;
-        void set_x(int32_t x) override;
+        int32_t get_x();
+        void set_x(int32_t x);
 
-        int32_t get_y() override;
-        void set_y(int32_t y) override;
+        int32_t get_y();
+        void set_y(int32_t y);
 
-        int32_t get_w() override;
-        void set_w(int32_t w) override;
+        int32_t get_w();
+        void set_w(int32_t w);
 
-        int32_t get_h() override;
-        void set_h(int32_t h) override;
+        int32_t get_h();
+        void set_h(int32_t h);
 
         int32_t get_health();
         void set_health(int32_t health);
@@ -53,8 +52,8 @@ class Dynamic: public Body {
         bool get_anchor();
         void set_anchor(bool anchor);
 
-        bool get_is_free() override;
-        void set_is_free(bool is_free) override;
+        bool get_is_free();
+        void set_is_free(bool is_free);
 
         std::pair<bool, bool> get_available_direction();
         void set_available_direction(std::pair<bool, bool> movement_direction);
