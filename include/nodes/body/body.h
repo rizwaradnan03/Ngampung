@@ -10,7 +10,7 @@ class Dynamic;
 class Body: public Render {
     public:
         virtual void Display();
-        virtual void Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture);
+        virtual void Init(int32_t x, int32_t y, int32_t w, int32_t h, std::string type, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture);
         virtual void Delete();
         virtual void Run(std::string* action, const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
         
@@ -29,6 +29,9 @@ class Body: public Render {
         virtual int32_t get_h();
         virtual void set_h(int32_t h);
 
+        virtual std::string get_type();
+        virtual void set_type(std::string type);
+
         virtual bool get_is_can_collide();
         virtual void set_is_can_collide(bool is_can_collide);
 
@@ -41,6 +44,8 @@ class Body: public Render {
         int32_t y;
         int32_t w;
         int32_t h;
+        std::string type;
+        
         Texture texture;
         bool anchor;
         bool is_can_collide;

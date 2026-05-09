@@ -16,13 +16,10 @@ class Dynamic: public Body {
     using Body::Init;
 
     public:    
-        virtual void Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture) override;
-        
+        virtual void Init(int32_t x, int32_t y, int32_t w, int32_t h, std::string type, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture) override;
         void Run(std::string* action, const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
-        
         void Display() override;
         void Delete() override;
-
         void Movement(); 
         void mouse_movement(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
 
@@ -46,6 +43,9 @@ class Dynamic: public Body {
 
         int32_t get_jump_amount();
         void set_jump_amount(int32_t jump_amount);
+
+        std::string get_type();
+        void set_type(std::string type);
 
         bool get_is_can_collide();
         void set_is_can_collide(bool is_can_collide);
@@ -86,7 +86,8 @@ class Dynamic: public Body {
         int32_t h;
         int32_t health;
         int32_t jump_amount;
-        
+        std::string type;
+
         bool is_free;
 
         std::pair<bool, bool> available_direction;

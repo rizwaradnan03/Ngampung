@@ -6,6 +6,7 @@
 #include <utility>
 #include <struct/dynamic.h>
 #include <chrono>
+#include <nodes/body/body.h>
 
 #pragma once
 
@@ -16,14 +17,12 @@ class Player: public Dynamic {
 
     public:    
         void Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture) override;
-        
         void Run(std::string* action, const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
-        
         void Display();
         void Delete();
-
         void Movement(); 
         void mouse_movement(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
+        void reset_oxygen_level_checker();
 
         int32_t get_layer();
         void set_layer(int32_t layer);
@@ -42,6 +41,15 @@ class Player: public Dynamic {
 
         int32_t get_health();
         void set_health(int32_t health);
+
+        int32_t get_oxygen_level();
+        void set_oxygen_level(int32_t oxygen_level);
+
+        std::chrono::time_point<std::chrono::high_resolution_clock>* get_dive_time();
+        void set_dive_time(std::chrono::time_point<std::chrono::high_resolution_clock>* dive_time);
+
+        std::string get_state();
+        void set_state(std::string state);
 
         int32_t get_jump_amount();
         void set_jump_amount(int32_t jump_amount);
@@ -85,7 +93,11 @@ class Player: public Dynamic {
         int32_t h;
         int32_t health;
         int32_t jump_amount;
-        
+
+        int32_t oxygen_level;
+        std::chrono::time_point<std::chrono::high_resolution_clock>* dive_time;
+        std::string state;
+
         bool is_free;
 
         std::pair<bool, bool> available_direction;

@@ -7,12 +7,13 @@
 #include <singleton/mouse.h>
 #include <nodes/body/dynamic.h>
 
-void Static::Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture){
+void Static::Init(int32_t x, int32_t y, int32_t w, int32_t h, std::string type, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture){
     this->set_x(x);
     this->set_y(y);
     this->set_w(w);
     this->set_h(h);
-    this->anchor = anchor;
+    this->set_type(type);
+    this->set_anchor(anchor);
     this->set_is_can_collide(is_can_collide);
     this->set_collide_masks(collide_masks);
     this->set_layer(layer);
@@ -74,6 +75,14 @@ void Static::set_h(int32_t h){
     this->h = h;
 }
 
+std::string Static::get_type(){
+    return this->type;
+}
+
+void Static::set_type(std::string type){
+    this->type = type;
+}
+
 int32_t Static::get_health(){
     return this->health;
 }
@@ -98,6 +107,13 @@ void Static::set_is_can_collide(bool is_can_collide){
     this->is_can_collide = is_can_collide;
 }
 
+bool Static::get_anchor(){
+    return this->anchor;
+}
+
+void Static::set_anchor(bool anchor){
+    this->anchor = anchor;
+}
 
 std::vector<int32_t>* Static::get_collide_masks(){
     return this->collide_masks;

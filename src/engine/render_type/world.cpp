@@ -13,7 +13,7 @@ void Render_Type_World::R_main(){
     std::vector<int32_t> masks = {1, 2, 3};
 
     Static* blck = new Static();
-    blck->Init(60, 240, 30, 30, h, true, true, 1, &masks, "BLOCK_dirt");
+    blck->Init(60, 240, 30, 30, "BLOCK", h, true, true, 1, &masks, "BLOCK_dirt");
 
     tmp.push_back(blck);
 
@@ -22,7 +22,7 @@ void Render_Type_World::R_main(){
     while(cur_y < 600){
         while(cur_x <= 780){
             Static* block = new Static();
-            block->Init(cur_x, cur_y, 30, 30, h, true, true, 1, &masks, "BLOCK_dirt");
+            block->Init(cur_x, cur_y, 30, 30, "BLOCK", h, true, true, 1, &masks, "BLOCK_dirt");
 
             tmp.push_back(block);
             cur_x += 30;

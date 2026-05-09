@@ -8,12 +8,13 @@
 #include <nodes/body/static.h>
 #include <singleton/mouse.h>
 
-void Dynamic::Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture){
+void Dynamic::Init(int32_t x, int32_t y, int32_t w, int32_t h, std::string type, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture){
     this->set_x(x);
     this->set_y(y);
     this->set_w(w);
     this->set_h(h);
     this->set_anchor(anchor);
+    this->set_type(type);
     this->set_is_can_collide(is_can_collide);
     this->set_health(health);
     this->set_layer(layer);
@@ -72,6 +73,14 @@ int32_t Dynamic::get_h(){
 
 void Dynamic::set_h(int32_t h){
     this->h = h;
+}
+
+std::string Dynamic::get_type(){
+    return this->type;
+}
+
+void Dynamic::set_type(std::string type){
+    this->type = type;
 }
 
 bool Dynamic::get_is_can_collide(){

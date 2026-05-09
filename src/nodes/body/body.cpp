@@ -4,7 +4,7 @@
 #include <nodes/body/static.h>
 #include <nodes/body/dynamic.h>
 
-void Body::Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture){
+void Body::Init(int32_t x, int32_t y, int32_t w, int32_t h, std::string type, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture){
     this->x = x;
     this->y = y;
     this->w = w;
@@ -53,6 +53,14 @@ int32_t Body::get_h(){
 
 void Body::set_h(int32_t h){
     this->h = h;
+}
+
+std::string Body::get_type(){
+    return this->type;
+}
+
+void Body::set_type(std::string type){
+    this->type = type;
 }
 
 int32_t Body::get_layer(){

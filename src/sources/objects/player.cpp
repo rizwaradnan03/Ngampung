@@ -146,6 +146,30 @@ void Player::set_health(int32_t health){
     this->health = health;
 }
 
+int32_t Player::get_oxygen_level(){
+    return this->oxygen_level;
+}
+
+void Player::set_oxygen_level(int32_t oxygen_level){
+    this->oxygen_level = oxygen_level;
+}
+
+std::string Player::get_state(){
+    return this->state;
+}
+
+void Player::set_state(std::string state){
+    this->state = state;
+}
+
+std::chrono::time_point<std::chrono::high_resolution_clock>* Player::get_dive_time(){
+    return this->dive_time;
+}
+
+void Player::set_dive_time(std::chrono::time_point<std::chrono::high_resolution_clock>* dive_time){
+    this->dive_time = dive_time;
+}
+
 int32_t Player::get_jump_amount(){
     return this->jump_amount;
 }
@@ -163,6 +187,7 @@ void Player::set_start_jump(std::chrono::time_point<std::chrono::high_resolution
 }
 
 void Player::Run(std::string* action, const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
+    this->reset_oxygen_level_checker();
     this->mouse_movement(static_objects, dynamic_objects);
     this->physics(static_objects, dynamic_objects);
     this->Display();
@@ -214,31 +239,33 @@ void Player::mouse_movement(const std::vector<Static*>& static_objects, const st
         pos.second -= 300;
 
         if(mouse_pos.x >= max_x - 200 && mouse_pos.x <= max_x && mouse_pos.y >= max_y - 200 && mouse_pos.y <= max_y){
-            int32_t calc_x = (int32_t)pos.first % 30;
-            int32_t calc_y = (int32_t)pos.second % 30;
-
+            int32_t calc_dir_x = (int32_t)pos.first % 30;
+            int32_t calc_dir_y = (int32_t)pos.second % 30;
+            
             while(pos.first % 30 != 0){
-                calc_x <= 15 ? pos.first-- : pos.first++;
+                calc_dir_x < 15 ? pos.first-- : pos.first++;
             }
 
             while(pos.second % 30 != 0){
-                calc_y <= 15 ? pos.second-- : pos.second++;
+                calc_dir_y < 15 ? pos.second-- : pos.second++;
             }
 
-            int32_t p_dpx = this->get_x();
-            int32_t p_dpy = this->get_y();
+            int32_t p_x = this->get_x();
+            int32_t p_y = this->get_y();
 
-            while(p_dpx % 30 != 0){
-                p_dpx % 30 <= 15 ? p_dpx-- : p_dpx++;
+            int32_t p_dir_x = p_x % 30;
+            int32_t p_dir_y = p_y % 30;
+
+            while(p_x % 30 != 0){
+                p_dir_x < 15 ? p_x-- : p_x++;
             }
 
-            while(p_dpy % 30 != 0){
-                p_dpy % 30 <= 15 ? p_dpy-- : p_dpy++;
+            while(p_y % 30 != 0){
+                p_dir_y < 15 ? p_y-- : p_y++;
             }
 
-            pos.first += p_dpx;
-            pos.second += p_dpy;
-            
+            pos.first += p_x;
+            pos.second += p_y;
         }
     }
 
@@ -256,31 +283,38 @@ void Player::box_collide_checker(const std::vector<Static*>& static_objects, con
         int32_t s_obj_z = static_objects.size();
         int32_t d_obj_z = dynamic_objects.size();
         for(int i = 0;i < s_obj_z + d_obj_z;i++){
-            Render* obj;
+            Body* obj;
             if(i < s_obj_z){
                 obj = static_objects[i];
             }else{
                 obj = dynamic_objects[i - s_obj_z];
             }
 
-            if(obj->get_layer() == this->get_layer() && obj->get_is_can_collide() == true){
-                std::pair<bool, std::string> cc = Physic::is_colliding(this, obj);
-                if(cc.first == true){
-                    if(cc.second == "BOTTOM"){
-                        d.is_found_bottom = true;
-                    }
+            std::pair<bool, std::string> cc = Physic::is_colliding(this, obj);
+            if(cc.first == true){
+                if(cc.second == "BOTTOM"){
+                    d.is_found_bottom = true;
+                }
 
-                    if(cc.second == "TOP"){
-                        d.is_found_top = true;
-                    }
+                if(cc.second == "TOP"){
+                    d.is_found_top = true;
+                }
 
-                    if(cc.second == "RIGHT"){
-                        d.is_found_right = true;
-                    }
+                if(cc.second == "RIGHT"){
+                    d.is_found_right = true;
+                }
 
-                    if(cc.second == "LEFT"){
-                        d.is_found_left = true;
-                    }
+                if(cc.second == "LEFT"){
+                    d.is_found_left = true;
+                }
+
+                // to check if that is a water
+                if(obj->get_type() == "WATER" && this->get_dive_time() == nullptr){
+                    auto current_time = new std::chrono::high_resolution_clock::time_point(
+                        std::chrono::high_resolution_clock::now()
+                    );
+
+                    this->set_dive_time(current_time);
                 }
             }
         }
@@ -379,10 +413,34 @@ void Player::gravity(const std::vector<Static*>& static_objects, const std::vect
     }
 }
 
+void Player::reset_oxygen_level_checker(){
+    if(this->get_state() == "WATER"){
+        auto current_time = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<float> differ = current_time - *this->get_dive_time();
+
+        if((int)differ.count() % 2 == 0){
+            this->set_oxygen_level(this->get_oxygen_level() - 1);
+            this->set_dive_time(new std::chrono::high_resolution_clock::time_point(current_time));
+
+            if(this->get_oxygen_level() <= 0){
+                this->Delete();
+            }
+        }
+    }else{
+        this->set_dive_time(nullptr);
+    }
+}
+
 void Player::Display(){
     Rectangle source = {0.0f, 0.0f, (float)this->m_body.width, (float)this->m_body.height};
     Rectangle dest = {(float)this->get_x(), (float)this->get_y(), (float)this->get_w(), (float)this->get_h()};
     Vector2 origin = {0, 0};
+
+    if(this->get_movement_direction() == "LEFT"){
+        source.width = -this->m_body.width;
+    }else if(this->get_movement_direction() == "RIGHT"){
+        source.width = this->m_body.width;
+    }
 
     DrawTexturePro(this->u_head, source, dest, origin, 0.0f, WHITE);
     DrawTexturePro(this->u_face, source, dest, origin, 0.0f, WHITE);

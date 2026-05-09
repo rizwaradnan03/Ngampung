@@ -15,7 +15,7 @@ class Static: public Body {
     using Body::Run;
 
     public:
-        void Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture) override;
+        void Init(int32_t x, int32_t y, int32_t w, int32_t h, std::string type, int32_t health, bool anchor, bool is_can_collide, int32_t layer, std::vector<int32_t>* collide_masks, std::string texture) override;
         void Display() override;
         void Delete() override;
         void Run(std::string* action, const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
@@ -43,8 +43,14 @@ class Static: public Body {
         int32_t get_h() override;
         void set_h(int32_t h) override;
 
+        std::string get_type() override;
+        void set_type(std::string type) override;
+
         bool get_is_can_collide();
         void set_is_can_collide(bool is_can_collide);
+
+        bool get_anchor();
+        void set_anchor(bool anchor);
 
         bool get_is_free() override;
         void set_is_free(bool is_can_collide) override;
@@ -66,6 +72,7 @@ class Static: public Body {
         int32_t y;
         int32_t w;
         int32_t h;
+        std::string type;
         bool anchor;
         bool is_can_collide;
         bool is_free;
