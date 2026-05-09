@@ -16,6 +16,11 @@ void Initial::InitImage(){
         std::cout << "GAGAL LOAD IMAGE!" << std::endl;
     }
 
+    Image BLOCK_water = LoadImage("./assets/image/block/water.jpg");
+    if (BLOCK_water.data == nullptr) {
+        std::cout << "GAGAL LOAD IMAGE!" << std::endl;
+    }
+
     Image BLOCK_player = LoadImage("./assets/image/accessories/player.png");
     if (BLOCK_player.data == nullptr) {
         std::cout << "GAGAL LOAD IMAGE!" << std::endl;
@@ -27,11 +32,15 @@ void Initial::InitImage(){
     Texture BLOCK_dirt_t = LoadTextureFromImage(BLOCK_dirt);
     UnloadImage(BLOCK_dirt);
 
+    Texture BLOCK_water_t = LoadTextureFromImage(BLOCK_water);
+    UnloadImage(BLOCK_water);
+
     Texture BLOCK_player_t = LoadTextureFromImage(BLOCK_player);
     UnloadImage(BLOCK_player);
 
     this->block.push_back(std::make_pair("BLOCK_face", BLOCK_face_t));
     this->block.push_back(std::make_pair("BLOCK_dirt", BLOCK_dirt_t));
+    this->block.push_back(std::make_pair("BLOCK_water", BLOCK_water_t));
     this->block.push_back(std::make_pair("BLOCK_player", BLOCK_player_t));
 
 }

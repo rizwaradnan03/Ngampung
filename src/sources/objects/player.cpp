@@ -17,6 +17,7 @@ void Player::Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bo
     this->set_is_can_collide(is_can_collide);
     this->set_health(health);
     this->set_layer(layer);
+    this->set_collide_masks(collide_masks);
     this->set_jump_amount(2);
     this->set_is_free(false);
 
@@ -40,6 +41,14 @@ int32_t Player::get_layer(){
 
 void Player::set_layer(int32_t layer){
     this->layer = layer;
+}
+
+std::vector<int32_t>* Player::get_collide_masks(){
+    return this->collide_masks;
+}
+
+void Player::set_collide_masks(std::vector<int32_t>* collide_masks){
+    this->collide_masks = collide_masks;
 }
 
 int32_t Player::get_x(){
@@ -290,33 +299,49 @@ void Player::box_collide_checker(const std::vector<Static*>& static_objects, con
                 obj = dynamic_objects[i - s_obj_z];
             }
 
-            std::pair<bool, std::string> cc = Physic::is_colliding(this, obj);
-            if(cc.first == true){
-                if(cc.second == "BOTTOM"){
-                    d.is_found_bottom = true;
-                }
+            bool is_sam_col = false;
+            std::vector<int32_t>* masks = this->get_collide_masks();
 
-                if(cc.second == "TOP"){
-                    d.is_found_top = true;
-                }
-
-                if(cc.second == "RIGHT"){
-                    d.is_found_right = true;
-                }
-
-                if(cc.second == "LEFT"){
-                    d.is_found_left = true;
-                }
-
-                // to check if that is a water
-                if(obj->get_type() == "WATER" && this->get_dive_time() == nullptr){
-                    auto current_time = new std::chrono::high_resolution_clock::time_point(
-                        std::chrono::high_resolution_clock::now()
-                    );
-
-                    this->set_dive_time(current_time);
+            if(masks == nullptr){
+                return;
+            }
+    
+            for(int j = 0;j < masks->size();j++){
+                if(obj->get_layer() == (*masks)[j]){
+                    is_sam_col = true;
+                    break;
                 }
             }
+
+            if(is_sam_col == true){
+                std::pair<bool, std::string> cc = Physic::is_colliding(this, obj);
+                if(cc.first == true){
+                    if(cc.second == "BOTTOM"){
+                        d.is_found_bottom = true;
+                    }
+
+                    if(cc.second == "TOP"){
+                        d.is_found_top = true;
+                    }
+
+                    if(cc.second == "RIGHT"){
+                        d.is_found_right = true;
+                    }
+
+                    if(cc.second == "LEFT"){
+                        d.is_found_left = true;
+                    }
+
+                    // to check if that is a water
+                    if(obj->get_type() == "WATER" && this->get_dive_time() == nullptr){
+                        auto current_time = new std::chrono::high_resolution_clock::time_point(
+                            std::chrono::high_resolution_clock::now()
+                        );
+
+                        this->set_dive_time(current_time);
+                    }
+                }
+            }            
         }
 
         if(d.is_found_bottom == false){

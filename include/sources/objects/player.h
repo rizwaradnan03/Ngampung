@@ -27,6 +27,9 @@ class Player: public Dynamic {
         int32_t get_layer();
         void set_layer(int32_t layer);
 
+        std::vector<int32_t>* get_collide_masks();
+        void set_collide_masks(std::vector<int32_t>* collide_masks);
+
         int32_t get_x();
         void set_x(int32_t x);
 
