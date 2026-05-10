@@ -1,10 +1,11 @@
 #include <engine/gui.h>
+#include <nodes/gui/container.h>
 #include <cstdint>
 #include <raylib.h>
 
 #pragma once
 
-class GUI_Container: public Gui{
+class GUI_Inventory: public GUI_Container {
     public:
         void Display() override;
         void Init(int32_t x, int32_t y, int32_t w, int32_t h, Color color);

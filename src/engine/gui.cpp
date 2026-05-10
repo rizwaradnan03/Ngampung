@@ -12,7 +12,7 @@ void Gui::Delete(){
     delete this;
 }
 
-void Gui::Run(){
+void Gui::Run(int32_t x, int32_t y, int32_t w, int32_t h){
     this->Display();
 }
 
@@ -59,3 +59,6 @@ Color Gui::get_color(){
 void Gui::set_color(Color color){
     this->color = color;
 }
+
+// action
+void Gui::click(){}

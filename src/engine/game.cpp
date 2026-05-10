@@ -9,7 +9,7 @@
 #include <engine/system.h>
 
 void Game::Start(){
-    const int screenWidth = 800;
+    const int screenWidth = 810;
     const int screenHeight = 600;
     // const int screenWidth = GetMonitorWidth(0);
     // const int screenHeight = GetMonitorHeight(0);

@@ -28,6 +28,12 @@ void Player::Init(int32_t x, int32_t y, int32_t w, int32_t h, int32_t health, bo
     }
 
     this->m_body = *tex;
+
+    // initialize some gui
+    GUI_Inventory* invent = new GUI_Inventory();
+    invent->Init(300, 540, 240, 60, GREEN);
+
+    this->set_inventory(invent);
 }
 
 void Player::Delete(){
@@ -115,11 +121,11 @@ void Player::set_available_direction(std::pair<bool, bool> available_direction){
     this->available_direction = available_direction;
 }
 
-std::vector<Render*> Player::get_inventory(){
+GUI_Inventory* Player::get_inventory(){
     return this->inventory;
 }
 
-void Player::set_inventory(std::vector<Render*> inventory){
+void Player::set_inventory(GUI_Inventory* inventory){
     this->inventory = inventory;
 }
 
@@ -199,7 +205,12 @@ void Player::Run(std::string* action, const std::vector<Static*>& static_objects
     this->reset_oxygen_level_checker();
     this->mouse_movement(static_objects, dynamic_objects);
     this->physics(static_objects, dynamic_objects);
+    
     this->Display();
+}
+
+void Player::fixed_on_screen_run(){
+    this->get_inventory()->Run();
 }
 
 void Player::Movement(){
@@ -287,6 +298,7 @@ void Player::physics(const std::vector<Static*>& static_objects, const std::vect
 
 void Player::box_collide_checker(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
     if(this->get_is_can_collide() == true && this->get_anchor() == false){
+        std::vector<int32_t>* masks = this->get_collide_masks();
         S_Dynamic::Gravity d = {false, false, false, false};
 
         int32_t s_obj_z = static_objects.size();
@@ -299,35 +311,35 @@ void Player::box_collide_checker(const std::vector<Static*>& static_objects, con
                 obj = dynamic_objects[i - s_obj_z];
             }
 
-            bool is_sam_col = false;
-            std::vector<int32_t>* masks = this->get_collide_masks();
+            std::pair<bool, std::string> cc = Physic::is_colliding(this, obj);
+            if(cc.first == true){
+                bool is_sam_col = false;
 
-            if(masks == nullptr){
-                return;
-            }
-    
-            for(int j = 0;j < masks->size();j++){
-                if(obj->get_layer() == (*masks)[j]){
-                    is_sam_col = true;
-                    break;
+                if(masks == nullptr){
+                    return;
                 }
-            }
+        
+                for(int j = 0;j < masks->size();j++){
+                    if(obj->get_layer() == (*masks)[j]){
+                        is_sam_col = true;
+                        break;
+                    }
+                }
 
-            if(is_sam_col == true){
-                std::pair<bool, std::string> cc = Physic::is_colliding(this, obj);
-                if(cc.first == true){
+                // if collide is true so we're checking if it has the same value for layer on collide masks
+                if(is_sam_col == true){
                     if(cc.second == "BOTTOM"){
                         d.is_found_bottom = true;
                     }
-
+    
                     if(cc.second == "TOP"){
                         d.is_found_top = true;
                     }
-
+    
                     if(cc.second == "RIGHT"){
                         d.is_found_right = true;
                     }
-
+    
                     if(cc.second == "LEFT"){
                         d.is_found_left = true;
                     }
@@ -337,13 +349,14 @@ void Player::box_collide_checker(const std::vector<Static*>& static_objects, con
                         auto current_time = new std::chrono::high_resolution_clock::time_point(
                             std::chrono::high_resolution_clock::now()
                         );
-
+    
                         this->set_dive_time(current_time);
                     }
                 }
-            }            
-        }
 
+            }        
+        }
+        
         if(d.is_found_bottom == false){
             this->set_y(this->get_y() + 3.0f);
         }else if(d.is_found_bottom == true){

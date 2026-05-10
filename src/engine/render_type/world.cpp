@@ -10,10 +10,10 @@ void Render_Type_World::R_main(){
     std::vector<Static*> tmp;
     int32_t h = 3;
 
-    std::vector<int32_t> masks = {1, 2, 3};
+    std::vector<int32_t>* masks = new std::vector<int32_t>{1, 2, 3};
 
     Static* blck = new Static();
-    blck->Init(60, 240, 30, 30, "BLOCK", h, true, true, 1, &masks, "BLOCK_dirt");
+    blck->Init(60, 240, 30, 30, "BLOCK", h, true, true, 1, masks, "BLOCK_dirt");
 
     tmp.push_back(blck);
 
@@ -22,7 +22,7 @@ void Render_Type_World::R_main(){
     while(cur_y < 600){
         while(cur_x <= 780){
             Static* block = new Static();
-            block->Init(cur_x, cur_y, 30, 30, "BLOCK", h, true, true, 1, &masks, "BLOCK_dirt");
+            block->Init(cur_x, cur_y, 30, 30, "BLOCK", h, true, true, 1, masks, "BLOCK_dirt");
 
             tmp.push_back(block);
             cur_x += 30;
@@ -32,7 +32,7 @@ void Render_Type_World::R_main(){
         cur_x = 0;
     }
 
-    this->to_render_static = tmp;
+    this->set_to_render_static(tmp);
 }
 
 void Render_Type_World::Set(std::string type){
@@ -41,9 +41,9 @@ void Render_Type_World::Set(std::string type){
     }
     
     Player* player = new Player();
-    std::vector<int32_t> masks = {1, 2, 3};
-    player->Init(0, 0, 30, 30, 100, false, true, 1, &masks, "BLOCK_player");
-    this->player = player;
+    std::vector<int32_t>* masks = new std::vector<int32_t>{1, 2, 3};
+    player->Init(0, 0, 30, 30, 100, false, true, 1, masks, "BLOCK_player");
+    this->set_player(player);
 
     // camera
     Camera2D cam = {0};
@@ -52,43 +52,75 @@ void Render_Type_World::Set(std::string type){
     cam.rotation = 0.0f;
     cam.zoom = 1.0f;
 
-    this->camera = cam;
+    this->set_camera(cam);
 }
 
 void Render_Type_World::Run(){
     this->camera_alligner();
     
-    // bool is_free = this->player->get_is_free();
-    // if(is_free == true){
-    //     delete player;
-    //     player = nullptr;
-    // }
-    
-    player->box_collide_checker(this->to_render_static, this->to_render_dynamic);
+    player->box_collide_checker(this->get_to_render_static(), this->get_to_render_dynamic());
     player->Movement();
 
     BeginDrawing();
     ClearBackground(BLUE);
-    BeginMode2D(this->camera);
+    BeginMode2D(this->get_camera());
 
-    player->Run(nullptr, this->to_render_static, this->to_render_dynamic);
+    player->Run(nullptr, this->get_to_render_static(), this->get_to_render_dynamic());
     this->Habit(nullptr);
 
     EndMode2D();
+
+    player->fixed_on_screen_run();
+
     EndDrawing();
 }
 
+std::vector<Static*> Render_Type_World::get_to_render_static(){
+    return this->to_render_static;
+}
+
+void Render_Type_World::set_to_render_static(std::vector<Static*> to_render_static){
+    this->to_render_static = to_render_static;
+}
+
+std::vector<Dynamic*> Render_Type_World::get_to_render_dynamic(){
+    return this->to_render_dynamic;
+}
+
+void Render_Type_World::set_to_render_dynamic(std::vector<Dynamic*> to_render_dynamic){
+    this->to_render_dynamic = to_render_dynamic;
+}
+
+Player* Render_Type_World::get_player(){
+    return this->player;
+}
+
+void Render_Type_World::set_player(Player* player){
+    this->player = player;
+}
+
+Camera2D Render_Type_World::get_camera(){
+    return this->camera;
+}
+
+void Render_Type_World::set_camera(Camera2D camera){
+    this->camera = camera;
+}
+
 void Render_Type_World::Habit(std::string* action){
-    int32_t sz = this->to_render_static.size();
-    int32_t dz = this->to_render_dynamic.size();
+    std::vector<Static*> ts = this->get_to_render_static();
+    std::vector<Dynamic*> td = this->get_to_render_dynamic();
+
+    int32_t sz = ts.size();
+    int32_t dz = td.size();
 
     for(int i = 0;i < sz + dz;i++){
         Body* obj;
 
         if(i < sz){
-            obj = this->to_render_static[i];
+            obj = ts[i];
         }else{
-            obj = this->to_render_dynamic[i - sz];
+            obj = td[i - sz];
         }
 
         bool is_free = obj->get_is_free();
@@ -97,16 +129,13 @@ void Render_Type_World::Habit(std::string* action){
             if(i < sz){
                 this->to_render_static.erase(this->to_render_static.begin() + i);
             }else{
-              this->to_render_dynamic.erase(this->to_render_dynamic.begin() + (i - sz));
+                this->to_render_dynamic.erase(this->to_render_dynamic.begin() + (i - sz));
             }
-
-            // i < sz ? this->to_render_static.erase(this->to_render_static.begin() + i) : this->to_render_dynamic.erase(this->to_render_dynamic.begin() + (i - sz));
 
             i--;
         }else{
-            obj->Run(action, to_render_static, to_render_dynamic);
+            obj->Run(action, this->get_to_render_static(), this->get_to_render_dynamic());
         }
-
     }
 }
 

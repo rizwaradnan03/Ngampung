@@ -7,6 +7,7 @@
 #include <struct/dynamic.h>
 #include <chrono>
 #include <nodes/body/body.h>
+#include <sources/gui/inventory.h>
 
 #pragma once
 
@@ -69,9 +70,6 @@ class Player: public Dynamic {
         std::pair<bool, bool> get_available_direction();
         void set_available_direction(std::pair<bool, bool> movement_direction);
 
-        std::vector<Render*> get_inventory();
-        void set_inventory(std::vector<Render*> inventory);
-
         std::string get_movement_action();
         void set_movement_action(std::string movement_action);
 
@@ -84,6 +82,10 @@ class Player: public Dynamic {
         std::chrono::time_point<std::chrono::high_resolution_clock> get_start_jump();
         void set_start_jump(std::chrono::time_point<std::chrono::high_resolution_clock> start_jump);
 
+        GUI_Inventory* get_inventory();
+        void set_inventory(GUI_Inventory* inventory);
+
+        void fixed_on_screen_run();
         void physics(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
         void box_collide_checker(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
         void gravity(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
@@ -126,5 +128,5 @@ class Player: public Dynamic {
         Texture l_leg;
         Texture l_foot;
 
-        std::vector<Render*> inventory;
+        GUI_Inventory* inventory;
 };

@@ -14,6 +14,12 @@ void GUI_Container::Delete(){
 
 void GUI_Container::Run(){
     this->Display();
+
+    // so we run the children too
+    std::vector<Gui*> chd = this->get_children();
+    for(int i = 0;i < chd.size();i++){
+        chd[i]->Run(this->get_x(), this->get_y(), this->get_w(), this->get_h());
+    }
 }
 
 void GUI_Container::Display(){
@@ -50,6 +56,14 @@ int32_t GUI_Container::get_h(){
 
 void GUI_Container::set_h(int32_t h){
     this->h = h;
+}
+
+std::vector<Gui*> GUI_Container::get_children(){
+    return this->children;
+}
+
+void GUI_Container::set_children(std::vector<Gui*> children){
+    this->children = children;
 }
 
 Color GUI_Container::get_color(){

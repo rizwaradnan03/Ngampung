@@ -15,6 +15,18 @@ class Render_Type_World {
         void Habit(std::string* action);
         void camera_alligner();
 
+        std::vector<Static*> get_to_render_static();
+        void set_to_render_static(std::vector<Static*> to_render_static);
+
+        std::vector<Dynamic*> get_to_render_dynamic();
+        void set_to_render_dynamic(std::vector<Dynamic*> to_render_dynamic);
+
+        Player* get_player();
+        void set_player(Player* player);
+
+        Camera2D get_camera();
+        void set_camera(Camera2D camera);
+
         void R_main();
 
     private:
