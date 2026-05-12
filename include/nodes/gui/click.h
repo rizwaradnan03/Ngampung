@@ -9,7 +9,7 @@ class GUI_Click: public Gui {
         void Display() override;
         void Init(int32_t x, int32_t y, int32_t w, int32_t h, Color color);
         void Delete() override;
-        void Run(int32_t x, int32_t y, int32_t w, int32_t h) override;
+        void Run() override;
 
         virtual int32_t get_x();
         virtual void set_x(int32_t x);

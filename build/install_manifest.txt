@@ -1,9 +1,12 @@
 C:/Users/Laris/Documents/Ngampung/build/_CPack_Packages/win64/NSIS/Ngampung-Installer/./Ngampung.exe
+C:/Users/Laris/Documents/Ngampung/build/_CPack_Packages/win64/NSIS/Ngampung-Installer/./assets/audio/break.mp3
 C:/Users/Laris/Documents/Ngampung/build/_CPack_Packages/win64/NSIS/Ngampung-Installer/./assets/audio/die.mp3
 C:/Users/Laris/Documents/Ngampung/build/_CPack_Packages/win64/NSIS/Ngampung-Installer/./assets/audio/jump.mp3
+C:/Users/Laris/Documents/Ngampung/build/_CPack_Packages/win64/NSIS/Ngampung-Installer/./assets/audio/punch.mp3
 C:/Users/Laris/Documents/Ngampung/build/_CPack_Packages/win64/NSIS/Ngampung-Installer/./assets/image/accessories/player.png
 C:/Users/Laris/Documents/Ngampung/build/_CPack_Packages/win64/NSIS/Ngampung-Installer/./assets/image/block/dirt.png
 C:/Users/Laris/Documents/Ngampung/build/_CPack_Packages/win64/NSIS/Ngampung-Installer/./assets/image/block/knight.jpg
+C:/Users/Laris/Documents/Ngampung/build/_CPack_Packages/win64/NSIS/Ngampung-Installer/./assets/image/block/water.jpg
 C:/Users/Laris/Documents/Ngampung/build/_CPack_Packages/win64/NSIS/Ngampung-Installer/./libraylib.dll
 C:/Users/Laris/Documents/Ngampung/build/_CPack_Packages/win64/NSIS/Ngampung-Installer/./glfw3.dll
 C:/Users/Laris/Documents/Ngampung/build/_CPack_Packages/win64/NSIS/Ngampung-Installer/./libgcc_s_seh-1.dll

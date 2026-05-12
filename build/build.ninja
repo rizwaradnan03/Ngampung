@@ -44,26 +44,6 @@ cmake_ninja_workdir = C$:/Users/Laris/Documents/Ngampung/build/
 
 build cmake_object_order_depends_target_Ngampung: phony || .
 
-build CMakeFiles/Ngampung.dir/src/body/dynamic.cpp.obj: CXX_COMPILER__Ngampung_unscanned_ C$:/Users/Laris/Documents/Ngampung/src/body/dynamic.cpp || cmake_object_order_depends_target_Ngampung
-  DEP_FILE = CMakeFiles\Ngampung.dir\src\body\dynamic.cpp.obj.d
-  FLAGS = -std=gnu++17 -IC:/msys64/mingw64/include
-  INCLUDES = -IC:/Users/Laris/Documents/Ngampung/include
-  OBJECT_DIR = CMakeFiles\Ngampung.dir
-  OBJECT_FILE_DIR = CMakeFiles\Ngampung.dir\src\body
-  TARGET_COMPILE_PDB = CMakeFiles\Ngampung.dir\
-  TARGET_PDB = Ngampung.pdb
-  TARGET_SUPPORT_DIR = CMakeFiles\Ngampung.dir
-
-build CMakeFiles/Ngampung.dir/src/body/static.cpp.obj: CXX_COMPILER__Ngampung_unscanned_ C$:/Users/Laris/Documents/Ngampung/src/body/static.cpp || cmake_object_order_depends_target_Ngampung
-  DEP_FILE = CMakeFiles\Ngampung.dir\src\body\static.cpp.obj.d
-  FLAGS = -std=gnu++17 -IC:/msys64/mingw64/include
-  INCLUDES = -IC:/Users/Laris/Documents/Ngampung/include
-  OBJECT_DIR = CMakeFiles\Ngampung.dir
-  OBJECT_FILE_DIR = CMakeFiles\Ngampung.dir\src\body
-  TARGET_COMPILE_PDB = CMakeFiles\Ngampung.dir\
-  TARGET_PDB = Ngampung.pdb
-  TARGET_SUPPORT_DIR = CMakeFiles\Ngampung.dir
-
 build CMakeFiles/Ngampung.dir/src/engine/game.cpp.obj: CXX_COMPILER__Ngampung_unscanned_ C$:/Users/Laris/Documents/Ngampung/src/engine/game.cpp || cmake_object_order_depends_target_Ngampung
   DEP_FILE = CMakeFiles\Ngampung.dir\src\engine\game.cpp.obj.d
   FLAGS = -std=gnu++17 -IC:/msys64/mingw64/include
@@ -94,12 +74,42 @@ build CMakeFiles/Ngampung.dir/src/engine/render.cpp.obj: CXX_COMPILER__Ngampung_
   TARGET_PDB = Ngampung.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\Ngampung.dir
 
-build CMakeFiles/Ngampung.dir/src/gui/container.cpp.obj: CXX_COMPILER__Ngampung_unscanned_ C$:/Users/Laris/Documents/Ngampung/src/gui/container.cpp || cmake_object_order_depends_target_Ngampung
-  DEP_FILE = CMakeFiles\Ngampung.dir\src\gui\container.cpp.obj.d
+build CMakeFiles/Ngampung.dir/src/engine/render_type/gui.cpp.obj: CXX_COMPILER__Ngampung_unscanned_ C$:/Users/Laris/Documents/Ngampung/src/engine/render_type/gui.cpp || cmake_object_order_depends_target_Ngampung
+  DEP_FILE = CMakeFiles\Ngampung.dir\src\engine\render_type\gui.cpp.obj.d
   FLAGS = -std=gnu++17 -IC:/msys64/mingw64/include
   INCLUDES = -IC:/Users/Laris/Documents/Ngampung/include
   OBJECT_DIR = CMakeFiles\Ngampung.dir
-  OBJECT_FILE_DIR = CMakeFiles\Ngampung.dir\src\gui
+  OBJECT_FILE_DIR = CMakeFiles\Ngampung.dir\src\engine\render_type
+  TARGET_COMPILE_PDB = CMakeFiles\Ngampung.dir\
+  TARGET_PDB = Ngampung.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\Ngampung.dir
+
+build CMakeFiles/Ngampung.dir/src/engine/render_type/world.cpp.obj: CXX_COMPILER__Ngampung_unscanned_ C$:/Users/Laris/Documents/Ngampung/src/engine/render_type/world.cpp || cmake_object_order_depends_target_Ngampung
+  DEP_FILE = CMakeFiles\Ngampung.dir\src\engine\render_type\world.cpp.obj.d
+  FLAGS = -std=gnu++17 -IC:/msys64/mingw64/include
+  INCLUDES = -IC:/Users/Laris/Documents/Ngampung/include
+  OBJECT_DIR = CMakeFiles\Ngampung.dir
+  OBJECT_FILE_DIR = CMakeFiles\Ngampung.dir\src\engine\render_type
+  TARGET_COMPILE_PDB = CMakeFiles\Ngampung.dir\
+  TARGET_PDB = Ngampung.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\Ngampung.dir
+
+build CMakeFiles/Ngampung.dir/src/engine/singleton.cpp.obj: CXX_COMPILER__Ngampung_unscanned_ C$:/Users/Laris/Documents/Ngampung/src/engine/singleton.cpp || cmake_object_order_depends_target_Ngampung
+  DEP_FILE = CMakeFiles\Ngampung.dir\src\engine\singleton.cpp.obj.d
+  FLAGS = -std=gnu++17 -IC:/msys64/mingw64/include
+  INCLUDES = -IC:/Users/Laris/Documents/Ngampung/include
+  OBJECT_DIR = CMakeFiles\Ngampung.dir
+  OBJECT_FILE_DIR = CMakeFiles\Ngampung.dir\src\engine
+  TARGET_COMPILE_PDB = CMakeFiles\Ngampung.dir\
+  TARGET_PDB = Ngampung.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\Ngampung.dir
+
+build CMakeFiles/Ngampung.dir/src/engine/system.cpp.obj: CXX_COMPILER__Ngampung_unscanned_ C$:/Users/Laris/Documents/Ngampung/src/engine/system.cpp || cmake_object_order_depends_target_Ngampung
+  DEP_FILE = CMakeFiles\Ngampung.dir\src\engine\system.cpp.obj.d
+  FLAGS = -std=gnu++17 -IC:/msys64/mingw64/include
+  INCLUDES = -IC:/Users/Laris/Documents/Ngampung/include
+  OBJECT_DIR = CMakeFiles\Ngampung.dir
+  OBJECT_FILE_DIR = CMakeFiles\Ngampung.dir\src\engine
   TARGET_COMPILE_PDB = CMakeFiles\Ngampung.dir\
   TARGET_PDB = Ngampung.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\Ngampung.dir
@@ -144,12 +154,112 @@ build CMakeFiles/Ngampung.dir/src/namespace/system.cpp.obj: CXX_COMPILER__Ngampu
   TARGET_PDB = Ngampung.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\Ngampung.dir
 
+build CMakeFiles/Ngampung.dir/src/nodes/body/body.cpp.obj: CXX_COMPILER__Ngampung_unscanned_ C$:/Users/Laris/Documents/Ngampung/src/nodes/body/body.cpp || cmake_object_order_depends_target_Ngampung
+  DEP_FILE = CMakeFiles\Ngampung.dir\src\nodes\body\body.cpp.obj.d
+  FLAGS = -std=gnu++17 -IC:/msys64/mingw64/include
+  INCLUDES = -IC:/Users/Laris/Documents/Ngampung/include
+  OBJECT_DIR = CMakeFiles\Ngampung.dir
+  OBJECT_FILE_DIR = CMakeFiles\Ngampung.dir\src\nodes\body
+  TARGET_COMPILE_PDB = CMakeFiles\Ngampung.dir\
+  TARGET_PDB = Ngampung.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\Ngampung.dir
+
+build CMakeFiles/Ngampung.dir/src/nodes/body/dynamic.cpp.obj: CXX_COMPILER__Ngampung_unscanned_ C$:/Users/Laris/Documents/Ngampung/src/nodes/body/dynamic.cpp || cmake_object_order_depends_target_Ngampung
+  DEP_FILE = CMakeFiles\Ngampung.dir\src\nodes\body\dynamic.cpp.obj.d
+  FLAGS = -std=gnu++17 -IC:/msys64/mingw64/include
+  INCLUDES = -IC:/Users/Laris/Documents/Ngampung/include
+  OBJECT_DIR = CMakeFiles\Ngampung.dir
+  OBJECT_FILE_DIR = CMakeFiles\Ngampung.dir\src\nodes\body
+  TARGET_COMPILE_PDB = CMakeFiles\Ngampung.dir\
+  TARGET_PDB = Ngampung.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\Ngampung.dir
+
+build CMakeFiles/Ngampung.dir/src/nodes/body/static.cpp.obj: CXX_COMPILER__Ngampung_unscanned_ C$:/Users/Laris/Documents/Ngampung/src/nodes/body/static.cpp || cmake_object_order_depends_target_Ngampung
+  DEP_FILE = CMakeFiles\Ngampung.dir\src\nodes\body\static.cpp.obj.d
+  FLAGS = -std=gnu++17 -IC:/msys64/mingw64/include
+  INCLUDES = -IC:/Users/Laris/Documents/Ngampung/include
+  OBJECT_DIR = CMakeFiles\Ngampung.dir
+  OBJECT_FILE_DIR = CMakeFiles\Ngampung.dir\src\nodes\body
+  TARGET_COMPILE_PDB = CMakeFiles\Ngampung.dir\
+  TARGET_PDB = Ngampung.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\Ngampung.dir
+
+build CMakeFiles/Ngampung.dir/src/nodes/gui/click.cpp.obj: CXX_COMPILER__Ngampung_unscanned_ C$:/Users/Laris/Documents/Ngampung/src/nodes/gui/click.cpp || cmake_object_order_depends_target_Ngampung
+  DEP_FILE = CMakeFiles\Ngampung.dir\src\nodes\gui\click.cpp.obj.d
+  FLAGS = -std=gnu++17 -IC:/msys64/mingw64/include
+  INCLUDES = -IC:/Users/Laris/Documents/Ngampung/include
+  OBJECT_DIR = CMakeFiles\Ngampung.dir
+  OBJECT_FILE_DIR = CMakeFiles\Ngampung.dir\src\nodes\gui
+  TARGET_COMPILE_PDB = CMakeFiles\Ngampung.dir\
+  TARGET_PDB = Ngampung.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\Ngampung.dir
+
+build CMakeFiles/Ngampung.dir/src/nodes/gui/container.cpp.obj: CXX_COMPILER__Ngampung_unscanned_ C$:/Users/Laris/Documents/Ngampung/src/nodes/gui/container.cpp || cmake_object_order_depends_target_Ngampung
+  DEP_FILE = CMakeFiles\Ngampung.dir\src\nodes\gui\container.cpp.obj.d
+  FLAGS = -std=gnu++17 -IC:/msys64/mingw64/include
+  INCLUDES = -IC:/Users/Laris/Documents/Ngampung/include
+  OBJECT_DIR = CMakeFiles\Ngampung.dir
+  OBJECT_FILE_DIR = CMakeFiles\Ngampung.dir\src\nodes\gui
+  TARGET_COMPILE_PDB = CMakeFiles\Ngampung.dir\
+  TARGET_PDB = Ngampung.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\Ngampung.dir
+
 build CMakeFiles/Ngampung.dir/src/setup/initial.cpp.obj: CXX_COMPILER__Ngampung_unscanned_ C$:/Users/Laris/Documents/Ngampung/src/setup/initial.cpp || cmake_object_order_depends_target_Ngampung
   DEP_FILE = CMakeFiles\Ngampung.dir\src\setup\initial.cpp.obj.d
   FLAGS = -std=gnu++17 -IC:/msys64/mingw64/include
   INCLUDES = -IC:/Users/Laris/Documents/Ngampung/include
   OBJECT_DIR = CMakeFiles\Ngampung.dir
   OBJECT_FILE_DIR = CMakeFiles\Ngampung.dir\src\setup
+  TARGET_COMPILE_PDB = CMakeFiles\Ngampung.dir\
+  TARGET_PDB = Ngampung.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\Ngampung.dir
+
+build CMakeFiles/Ngampung.dir/src/singleton/mouse.cpp.obj: CXX_COMPILER__Ngampung_unscanned_ C$:/Users/Laris/Documents/Ngampung/src/singleton/mouse.cpp || cmake_object_order_depends_target_Ngampung
+  DEP_FILE = CMakeFiles\Ngampung.dir\src\singleton\mouse.cpp.obj.d
+  FLAGS = -std=gnu++17 -IC:/msys64/mingw64/include
+  INCLUDES = -IC:/Users/Laris/Documents/Ngampung/include
+  OBJECT_DIR = CMakeFiles\Ngampung.dir
+  OBJECT_FILE_DIR = CMakeFiles\Ngampung.dir\src\singleton
+  TARGET_COMPILE_PDB = CMakeFiles\Ngampung.dir\
+  TARGET_PDB = Ngampung.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\Ngampung.dir
+
+build CMakeFiles/Ngampung.dir/src/sources/gui/inventory.cpp.obj: CXX_COMPILER__Ngampung_unscanned_ C$:/Users/Laris/Documents/Ngampung/src/sources/gui/inventory.cpp || cmake_object_order_depends_target_Ngampung
+  DEP_FILE = CMakeFiles\Ngampung.dir\src\sources\gui\inventory.cpp.obj.d
+  FLAGS = -std=gnu++17 -IC:/msys64/mingw64/include
+  INCLUDES = -IC:/Users/Laris/Documents/Ngampung/include
+  OBJECT_DIR = CMakeFiles\Ngampung.dir
+  OBJECT_FILE_DIR = CMakeFiles\Ngampung.dir\src\sources\gui
+  TARGET_COMPILE_PDB = CMakeFiles\Ngampung.dir\
+  TARGET_PDB = Ngampung.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\Ngampung.dir
+
+build CMakeFiles/Ngampung.dir/src/sources/gui/item_inventory_click.cpp.obj: CXX_COMPILER__Ngampung_unscanned_ C$:/Users/Laris/Documents/Ngampung/src/sources/gui/item_inventory_click.cpp || cmake_object_order_depends_target_Ngampung
+  DEP_FILE = CMakeFiles\Ngampung.dir\src\sources\gui\item_inventory_click.cpp.obj.d
+  FLAGS = -std=gnu++17 -IC:/msys64/mingw64/include
+  INCLUDES = -IC:/Users/Laris/Documents/Ngampung/include
+  OBJECT_DIR = CMakeFiles\Ngampung.dir
+  OBJECT_FILE_DIR = CMakeFiles\Ngampung.dir\src\sources\gui
+  TARGET_COMPILE_PDB = CMakeFiles\Ngampung.dir\
+  TARGET_PDB = Ngampung.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\Ngampung.dir
+
+build CMakeFiles/Ngampung.dir/src/sources/objects/player.cpp.obj: CXX_COMPILER__Ngampung_unscanned_ C$:/Users/Laris/Documents/Ngampung/src/sources/objects/player.cpp || cmake_object_order_depends_target_Ngampung
+  DEP_FILE = CMakeFiles\Ngampung.dir\src\sources\objects\player.cpp.obj.d
+  FLAGS = -std=gnu++17 -IC:/msys64/mingw64/include
+  INCLUDES = -IC:/Users/Laris/Documents/Ngampung/include
+  OBJECT_DIR = CMakeFiles\Ngampung.dir
+  OBJECT_FILE_DIR = CMakeFiles\Ngampung.dir\src\sources\objects
+  TARGET_COMPILE_PDB = CMakeFiles\Ngampung.dir\
+  TARGET_PDB = Ngampung.pdb
+  TARGET_SUPPORT_DIR = CMakeFiles\Ngampung.dir
+
+build CMakeFiles/Ngampung.dir/src/sources/screens/gui_main.cpp.obj: CXX_COMPILER__Ngampung_unscanned_ C$:/Users/Laris/Documents/Ngampung/src/sources/screens/gui_main.cpp || cmake_object_order_depends_target_Ngampung
+  DEP_FILE = CMakeFiles\Ngampung.dir\src\sources\screens\gui_main.cpp.obj.d
+  FLAGS = -std=gnu++17 -IC:/msys64/mingw64/include
+  INCLUDES = -IC:/Users/Laris/Documents/Ngampung/include
+  OBJECT_DIR = CMakeFiles\Ngampung.dir
+  OBJECT_FILE_DIR = CMakeFiles\Ngampung.dir\src\sources\screens
   TARGET_COMPILE_PDB = CMakeFiles\Ngampung.dir\
   TARGET_PDB = Ngampung.pdb
   TARGET_SUPPORT_DIR = CMakeFiles\Ngampung.dir
@@ -162,7 +272,7 @@ build CMakeFiles/Ngampung.dir/src/setup/initial.cpp.obj: CXX_COMPILER__Ngampung_
 #############################################
 # Link the executable Ngampung.exe
 
-build Ngampung.exe: CXX_EXECUTABLE_LINKER__Ngampung_ CMakeFiles/Ngampung.dir/src/body/dynamic.cpp.obj CMakeFiles/Ngampung.dir/src/body/static.cpp.obj CMakeFiles/Ngampung.dir/src/engine/game.cpp.obj CMakeFiles/Ngampung.dir/src/engine/gui.cpp.obj CMakeFiles/Ngampung.dir/src/engine/render.cpp.obj CMakeFiles/Ngampung.dir/src/gui/container.cpp.obj CMakeFiles/Ngampung.dir/src/main.cpp.obj CMakeFiles/Ngampung.dir/src/namespace/audio.cpp.obj CMakeFiles/Ngampung.dir/src/namespace/physic.cpp.obj CMakeFiles/Ngampung.dir/src/namespace/system.cpp.obj CMakeFiles/Ngampung.dir/src/setup/initial.cpp.obj | C$:/msys64/mingw64/lib/libraylib.dll.a
+build Ngampung.exe: CXX_EXECUTABLE_LINKER__Ngampung_ CMakeFiles/Ngampung.dir/src/engine/game.cpp.obj CMakeFiles/Ngampung.dir/src/engine/gui.cpp.obj CMakeFiles/Ngampung.dir/src/engine/render.cpp.obj CMakeFiles/Ngampung.dir/src/engine/render_type/gui.cpp.obj CMakeFiles/Ngampung.dir/src/engine/render_type/world.cpp.obj CMakeFiles/Ngampung.dir/src/engine/singleton.cpp.obj CMakeFiles/Ngampung.dir/src/engine/system.cpp.obj CMakeFiles/Ngampung.dir/src/main.cpp.obj CMakeFiles/Ngampung.dir/src/namespace/audio.cpp.obj CMakeFiles/Ngampung.dir/src/namespace/physic.cpp.obj CMakeFiles/Ngampung.dir/src/namespace/system.cpp.obj CMakeFiles/Ngampung.dir/src/nodes/body/body.cpp.obj CMakeFiles/Ngampung.dir/src/nodes/body/dynamic.cpp.obj CMakeFiles/Ngampung.dir/src/nodes/body/static.cpp.obj CMakeFiles/Ngampung.dir/src/nodes/gui/click.cpp.obj CMakeFiles/Ngampung.dir/src/nodes/gui/container.cpp.obj CMakeFiles/Ngampung.dir/src/setup/initial.cpp.obj CMakeFiles/Ngampung.dir/src/singleton/mouse.cpp.obj CMakeFiles/Ngampung.dir/src/sources/gui/inventory.cpp.obj CMakeFiles/Ngampung.dir/src/sources/gui/item_inventory_click.cpp.obj CMakeFiles/Ngampung.dir/src/sources/objects/player.cpp.obj CMakeFiles/Ngampung.dir/src/sources/screens/gui_main.cpp.obj | C$:/msys64/mingw64/lib/libraylib.dll.a
   LINK_LIBRARIES = C:/msys64/mingw64/lib/libraylib.dll.a  -LC:/msys64/mingw64/lib -lraylib  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\Ngampung.dir
   POST_BUILD = C:\WINDOWS\system32\cmd.exe /C "cd /D C:\Users\Laris\Documents\Ngampung\build && C:\msys64\mingw64\bin\cmake.exe -E copy_directory C:/Users/Laris/Documents/Ngampung/assets C:/Users/Laris/Documents/Ngampung/build/assets"

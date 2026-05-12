@@ -208,51 +208,7 @@ void Dynamic::Movement(){
     }
 }
 
-void Dynamic::mouse_movement(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
-    int32_t max_x = 500;
-    int32_t max_y = 410;
-    Vector2 mouse_pos = GetMousePosition();
-
-    std::string* action = nullptr;
-    std::pair<int32_t, int32_t> pos = std::make_pair((int32_t)mouse_pos.x, (int32_t)mouse_pos.y);
-
-    if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
-        action = new std::string("CLICK_LEFT");
-
-        pos.first -= 420;
-        pos.second -= 300;
-
-        if(mouse_pos.x >= max_x - 200 && mouse_pos.x <= max_x && mouse_pos.y >= max_y - 200 && mouse_pos.y <= max_y){
-            int32_t calc_x = (int32_t)pos.first % 30;
-            int32_t calc_y = (int32_t)pos.second % 30;
-
-            while(pos.first % 30 != 0){
-                calc_x <= 15 ? pos.first-- : pos.first++;
-            }
-
-            while(pos.second % 30 != 0){
-                calc_y <= 15 ? pos.second-- : pos.second++;
-            }
-
-            int32_t p_dpx = this->get_x();
-            int32_t p_dpy = this->get_y();
-
-            while(p_dpx % 30 != 0){
-                p_dpx % 30 <= 15 ? p_dpx-- : p_dpx++;
-            }
-
-            while(p_dpy % 30 != 0){
-                p_dpy % 30 <= 15 ? p_dpy-- : p_dpy++;
-            }
-
-            pos.first += p_dpx;
-            pos.second += p_dpy;
-            
-        }
-    }
-
-    G_SINGLETON_mouse->set_mouse(std::make_pair(action, pos));
-}
+void Dynamic::mouse_movement(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){}
 
 void Dynamic::physics(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects){
     // this->box_collide_checker(static_objects, dynamic_objects);

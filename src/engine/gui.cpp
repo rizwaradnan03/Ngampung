@@ -12,7 +12,7 @@ void Gui::Delete(){
     delete this;
 }
 
-void Gui::Run(int32_t x, int32_t y, int32_t w, int32_t h){
+void Gui::Run(){
     this->Display();
 }
 

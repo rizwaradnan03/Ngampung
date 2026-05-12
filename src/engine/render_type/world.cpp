@@ -45,7 +45,6 @@ void Render_Type_World::Set(std::string type){
     player->Init(0, 0, 30, 30, 100, false, true, 1, masks, "BLOCK_player");
     this->set_player(player);
 
-    // camera
     Camera2D cam = {0};
     cam.target = {(float)this->player->get_x(), (float)this->player->get_y()};
     cam.offset = {GetScreenWidth() / 2.0f, GetScreenHeight() / 2.0f};

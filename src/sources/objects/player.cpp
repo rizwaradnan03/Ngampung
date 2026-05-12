@@ -1,7 +1,6 @@
 #include <sources/objects/player.h>
 #include <initial.h>
 #include <namespace/system.h>
-#include <iostream>
 #include <namespace/audio.h>
 #include <namespace/physic.h>
 #include <namespace/system.h>

@@ -8,7 +8,7 @@ void GUI_Click::Init(int32_t x, int32_t y, int32_t w, int32_t h, Color color){
     this->set_color(color);
 }
 
-void GUI_Click::Run(int32_t x, int32_t y, int32_t w, int32_t h){
+void GUI_Click::Run(){
     this->Display();
 }
 

@@ -1,4 +1,5 @@
 #include <sources/gui/inventory.h>
+#include <sources/gui/item_inventory_click.h>
 #include <iostream>
 
 void GUI_Inventory::Init(int32_t x, int32_t y, int32_t w, int32_t h, Color color){
@@ -7,6 +8,14 @@ void GUI_Inventory::Init(int32_t x, int32_t y, int32_t w, int32_t h, Color color
     this->set_w(w);
     this->set_h(h);
     this->set_color(color);
+
+    std::vector<Gui*> chd;
+
+    Gui* clicked_stuff = new GUI_Item_Inventory_Click();
+    clicked_stuff->Init(this->get_x() + 30, this->get_y(), 60, 60, RED);
+    chd.push_back(clicked_stuff);
+
+    this->set_children(chd);
 }
 
 void GUI_Inventory::Delete(){
@@ -18,7 +27,7 @@ void GUI_Inventory::Run(){
 
     std::vector<Gui*> chd = this->get_children();
     for(int i = 0;i < chd.size();i++){
-        chd[i]->Run(this->get_x(), this->get_y(), this->get_w(), this->get_h());
+        chd[i]->Run();
     }
 }
 

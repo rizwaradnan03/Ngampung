@@ -18,7 +18,7 @@ void GUI_Container::Run(){
     // so we run the children too
     std::vector<Gui*> chd = this->get_children();
     for(int i = 0;i < chd.size();i++){
-        chd[i]->Run(this->get_x(), this->get_y(), this->get_w(), this->get_h());
+        chd[i]->Run();
     }
 }
 
