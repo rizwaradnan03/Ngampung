@@ -128,6 +128,14 @@ void Player::set_inventory(GUI_Inventory* inventory){
     this->inventory = inventory;
 }
 
+Render* Player::get_selected_item(){
+    return this->selected_item;
+}
+
+void Player::set_selected_item(Render* selected_item){
+    this->selected_item = selected_item;
+}
+
 std::string Player::get_movement_action(){
     return this->movement_action;
 }
@@ -209,7 +217,9 @@ void Player::Run(std::string* action, const std::vector<Static*>& static_objects
 }
 
 void Player::fixed_on_screen_run(){
-    this->get_inventory()->Run();
+    this->get_inventory()->Run([this](Render* r) {
+        this->set_selected_item(r);
+    });
 }
 
 void Player::Movement(){
@@ -251,11 +261,11 @@ void Player::mouse_movement(const std::vector<Static*>& static_objects, const st
     std::string* action = nullptr;
     std::pair<int32_t, int32_t> pos = std::make_pair((int32_t)mouse_pos.x, (int32_t)mouse_pos.y);
 
+    pos.first -= 420;
+    pos.second -= 300;
+
     if(IsMouseButtonPressed(MOUSE_BUTTON_LEFT)){
         action = new std::string("CLICK_LEFT");
-
-        pos.first -= 420;
-        pos.second -= 300;
 
         if(mouse_pos.x >= max_x - 200 && mouse_pos.x <= max_x && mouse_pos.y >= max_y - 200 && mouse_pos.y <= max_y){
             int32_t calc_dir_x = (int32_t)pos.first % 30;
@@ -268,25 +278,26 @@ void Player::mouse_movement(const std::vector<Static*>& static_objects, const st
             while(pos.second % 30 != 0){
                 calc_dir_y < 15 ? pos.second-- : pos.second++;
             }
-
-            int32_t p_x = this->get_x();
-            int32_t p_y = this->get_y();
-
-            int32_t p_dir_x = p_x % 30;
-            int32_t p_dir_y = p_y % 30;
-
-            while(p_x % 30 != 0){
-                p_dir_x < 15 ? p_x-- : p_x++;
-            }
-
-            while(p_y % 30 != 0){
-                p_dir_y < 15 ? p_y-- : p_y++;
-            }
-
-            pos.first += p_x;
-            pos.second += p_y;
         }
+
     }
+    
+    int32_t p_x = this->get_x();
+    int32_t p_y = this->get_y();
+
+    int32_t p_dir_x = p_x % 30;
+    int32_t p_dir_y = p_y % 30;
+
+    while(p_x % 30 != 0){
+        p_dir_x < 15 ? p_x-- : p_x++;
+    }
+
+    while(p_y % 30 != 0){
+        p_dir_y < 15 ? p_y-- : p_y++;
+    }
+
+    pos.first += p_x;
+    pos.second += p_y;
 
     G_SINGLETON_mouse->set_mouse(std::make_pair(action, pos));
 }

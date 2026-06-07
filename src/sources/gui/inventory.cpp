@@ -22,12 +22,12 @@ void GUI_Inventory::Delete(){
     delete this;
 }
 
-void GUI_Inventory::Run(){
+void GUI_Inventory::Run(std::function<void(Render*)> func){
     this->Display();
 
     std::vector<Gui*> chd = this->get_children();
     for(int i = 0;i < chd.size();i++){
-        chd[i]->Run();
+        chd[i]->Run(func);
     }
 }
 

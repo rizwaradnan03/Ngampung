@@ -8,6 +8,7 @@
 #include <chrono>
 #include <nodes/body/body.h>
 #include <sources/gui/inventory.h>
+#include <engine/render.h>
 
 #pragma once
 
@@ -84,6 +85,9 @@ class Player: public Dynamic {
 
         GUI_Inventory* get_inventory();
         void set_inventory(GUI_Inventory* inventory);
+        
+        Render* get_selected_item();
+        void set_selected_item(Render* selected_item);
 
         void fixed_on_screen_run();
         void physics(const std::vector<Static*>& static_objects, const std::vector<Dynamic*>& dynamic_objects);
@@ -129,4 +133,5 @@ class Player: public Dynamic {
         Texture l_foot;
 
         GUI_Inventory* inventory;
+        Render* selected_item;
 };

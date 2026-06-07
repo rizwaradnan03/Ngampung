@@ -14,11 +14,11 @@ void GUI_Item_Inventory_Click::Delete(){
     delete this;
 }
 
-void GUI_Item_Inventory_Click::Run(){
+void GUI_Item_Inventory_Click::Run(std::function<void(Render*)> func){
     // std::cout << "mouse ptr : " << G_SINGLETON_mouse << std::endl;
 
     this->Display();
-    this->click();
+    this->click(func);
 }
 
 void GUI_Item_Inventory_Click::Display(){
@@ -66,22 +66,21 @@ void GUI_Item_Inventory_Click::set_color(Color color){
 }
 
 // action & i got so much bug on here
-void GUI_Item_Inventory_Click::click(){
-    if(IsMouseButtonPressed(MOUSE_LEFT_BUTTON)){
-        std::cout << "aku gila" << std::endl;
-        std::pair<std::string*, std::pair<int32_t, int32_t>> mouse = G_SINGLETON_mouse->get_mouse();
-        // if(mouse.first == nullptr){
-        // 	return;
-        // }
+void GUI_Item_Inventory_Click::click(std::function<void(Render*)> func){
+    Vector2 mouse_pos = GetMousePosition();
+
+    std::pair<std::string*, std::pair<int32_t, int32_t>> mouse = G_SINGLETON_mouse->get_mouse();
+    if(mouse.first == nullptr){
+        return;
+    }
     
-        int32_t left = this->get_x();
-        int32_t right = this->get_x() + this->get_w();
-        int32_t top = this->get_y();
-        int32_t bottom = this->get_y() + this->get_h();
-        
-        if(mouse.second.first >= left && mouse.second.first <= right && mouse.second.second >= top && mouse.second.second <= bottom){
-            std::cout << "cihooyy" << std::endl;
-        }
+    int32_t left = this->get_x();
+    int32_t right = this->get_x() + this->get_w();
+    int32_t top = this->get_y();
+    int32_t bottom = this->get_y() + this->get_h();
+
+    if(mouse_pos.x >= left && mouse_pos.x <= right && mouse_pos.y >= top && mouse_pos.y <= bottom){
+        std::cout << "cihooyy" << std::endl;
     }
 
 }

@@ -131,7 +131,12 @@ void Render_Type_World::Habit(std::string* action){
                 this->to_render_dynamic.erase(this->to_render_dynamic.begin() + (i - sz));
             }
 
-            i--;
+            if(i == 0){
+                obj->Run(action, this->get_to_render_static(), this->get_to_render_dynamic());
+            }else{
+                i--;
+            }
+
         }else{
             obj->Run(action, this->get_to_render_static(), this->get_to_render_dynamic());
         }

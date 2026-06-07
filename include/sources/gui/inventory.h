@@ -2,6 +2,8 @@
 #include <nodes/gui/container.h>
 #include <cstdint>
 #include <raylib.h>
+#include <functional>
+#include <engine/render.h>
 
 #pragma once
 
@@ -10,7 +12,7 @@ class GUI_Inventory: public GUI_Container {
         void Display() override;
         void Init(int32_t x, int32_t y, int32_t w, int32_t h, Color color);
         void Delete() override;
-        void Run();
+        void Run(std::function<void(Render*)> func);
 
         int32_t get_x() override;
         void set_x(int32_t x) override;
